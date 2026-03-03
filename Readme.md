@@ -11,7 +11,13 @@
 - Ссылки на билеты/регистрацию
 
 Технологии:
-...
+### Frontend – KMP
+- Архитектура D-KMP
+- Паттерн в UI слое - MVI
+- voyager **screen model** для ViewModel
+- voyager **navigation** для навигации
+- koin для DI
+- Http - ?
 
 [User Story Map](https://www.figma.com/design/J97C2rOwki4CXWKHeu0z3o/User-Story-Map-%D0%90%D0%B2%D1%82%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F?node-id=43-235&t=MripeXoPwOOraTW0-1)
 
