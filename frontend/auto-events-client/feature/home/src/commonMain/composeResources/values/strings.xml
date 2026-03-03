@@ -1,0 +1,36 @@
+<resources>
+    <string name="conversion_rate">Конверсия звонков</string>
+    <string name="arg_duration">Средняя длительность</string>
+    <string name="transcription_accuracy">Точность транскрипции</string>
+
+    <string name="evaluation_of_administrators_work">Оценка работы администраторов</string>
+    <string name="evaluation_kpi">KPI</string>
+
+    <string name="work_analise">Анализ работы</string>
+    <string name="arg_duration_ring">Средняя длительность звонка</string>
+    <string name="lead_percent">Процент записи</string>
+    <string name="check_list_accordance">Соответствие чек-листу</string>
+    <string name="improvisation">Импровизация</string>
+
+    <string name="excellent">Отлично</string>
+    <string name="good">Хорошо</string>
+    <string name="satisfactory">Удовлетворительно</string>
+    <string name="no_satisfactory">Не удовлетворительно</string>
+
+    <string name="created">Запись создана</string>
+    <string name="no_recorded">Не записан</string>
+
+    <string name="rings_title">Звонки</string>
+    <string name="auto_analise_dialogs">Автоматический анализ разговоров</string>
+
+    <string name="ring_date">Дата звонка</string>
+    <string name="ring_duration">Длительность звонка</string>
+    <string name="operator">Оператор</string>
+    <string name="patient">Пациент</string>
+    <string name="service">Услуга</string>
+    <string name="doctor">Врач</string>
+    <string name="status">Статус</string>
+
+    <string name="empty_rings_description">Для анализа загрузите файл в формате .json</string>
+    <string name="empty_rings_btn_text">Загрузить</string>
+</resources>
