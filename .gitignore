@@ -2,5 +2,5 @@
 .DS_Store
 frontend/auto-events-client/kotlin-js-store
 
-__pycache__/
-.env
+
+
