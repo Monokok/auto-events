@@ -1,0 +1,79 @@
+[project]
+name = "autoevents-backend"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "asyncpg>=0.31.0",
+    "bcrypt==4.3.0",
+    "fastapi[standard]>=0.135.1",
+    "passlib>=1.7.4",
+    "pyjwt>=2.11.0",
+    "sqlalchemy>=2.0.48",
+]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.38.2",
+    "ruff>=0.15.4",
+]
+
+[tool.basedpyright]
+# Пути к файлам, которые проверяются и не проверяются
+include = ["app"]
+exclude = [
+    "**/.*",          # Любые скрытые папки
+    "**/__pycache__", # Кэш Python
+]
+# Строгость проверки типов
+typeCheckingMode = "basic"  # Самый базовый режим
+
+# Настройка версии Python и платформы
+pythonVersion = "3.14"
+pythonPlatform = "Linux"
+
+# Настройка окружений выполнения
+executionEnvironments = [
+    { root = "app" },
+]
+
+[tool.ruff]
+# Исключить из проверки разные ненужные директории
+exclude = [
+    "**/.*",              # Любые скрытые папки
+    "**/__pycache__",     # Кэш Python
+]
+src = ["app"]
+preview = true
+
+# Как в Black
+line-length = 88
+indent-width = 4
+
+target-version = "py314" # Используем версию Python 3.14
+
+[tool.ruff.lint]
+# Настройка проверок.
+select = [
+    "I",   # isort
+    "F",   # pyflakes
+    "UP",  # pyupgrade
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "SIM", # flake8-simplify
+    "C",   # flake8-comprehensions
+]
+ignore = [
+    "C901", # complex-structure, временно игнорируем
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-third-party=["alembic"]
+
+[tool.ruff.format]
+# Как в Black, используем двойные кавычки для строк.
+quote-style = "double"
+# Как в Black, оставляем магические запятые в конце строки.
+skip-magic-trailing-comma = false
+# Как в Black, автоматически определяем подходящее окончание строки.
+line-ending = "auto"

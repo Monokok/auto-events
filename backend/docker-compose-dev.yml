@@ -1,0 +1,53 @@
+services:
+  backend:
+    build:
+      context: .
+    container_name: backend_container
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    ports:
+      - 8010:8000
+    env_file:
+      - .env
+    
+  postgres:
+    image: postgres:16
+    container_name: db_container
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app-network
+    restart: unless-stopped
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:8.8
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+      PGADMIN_LISTEN_PORT: 8001
+      PGADMIN_LISTEN_ADDRESS: "0.0.0.0"
+    volumes:
+      - pgadmin_vol:/var/lib/pgadmin
+    ports:
+      - ${PGADMIN_LISTEN_PORT}:8001
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+
+networks:
+  app-network:
+
+volumes:
+  postgres_vol:
+  pgadmin_vol:
