@@ -6,11 +6,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import auto_events_client.core.ui.generated.resources.Res
-import auto_events_client.core.ui.generated.resources.inter_black
-import auto_events_client.core.ui.generated.resources.inter_bold
-import auto_events_client.core.ui.generated.resources.inter_medium
-import auto_events_client.core.ui.generated.resources.inter_regular
+import auto_events_client.core.ui.generated.resources.*
 import org.jetbrains.compose.resources.Font
 
 private val InterFontFamily
@@ -22,20 +18,21 @@ private val InterFontFamily
         Font(resource = Res.font.inter_black, weight = FontWeight.Black),
     )
 
-val Typography.inter40Normal
+
+val Typography.inter48ExtraBold
     @Composable
     get() = TextStyle(
         fontFamily = InterFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 40.sp,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 48.sp,
     )
 
-val Typography.inter36Normal
+val Typography.inter16Bold
     @Composable
     get() = TextStyle(
         fontFamily = InterFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 36.sp,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
     )
 
 val Typography.inter14Normal
@@ -46,18 +43,18 @@ val Typography.inter14Normal
         fontSize = 14.sp,
     )
 
+val Typography.inter14Bold
+    @Composable
+    get() = TextStyle(
+        fontFamily = InterFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+    )
+
 val Typography.inter10Normal
     @Composable
     get() = TextStyle(
         fontFamily = InterFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 10.sp,
-    )
-
-val Typography.inter10Medium
-    @Composable
-    get() = TextStyle(
-        fontFamily = InterFontFamily,
-        fontWeight = FontWeight.Medium,
         fontSize = 10.sp,
     )

@@ -6,13 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 // Основные цвета
-private val Color.Companion.LightThemeLiteGray: Color get() = Color(0xFFF4F4F4)
-private val Color.Companion.LightThemeSecondaryGray: Color get() = Color(0xFFC7C7C7)
-private val Color.Companion.LightThemePrimaryGray: Color get() = Color(0xFFB3B3B3)
-private val Color.Companion.LightThemeDarkGray: Color get() = Color(0xFF737373)
-private val Color.Companion.LightThemeLiteWhite: Color get() = Color(0xFFF2F2F2)
+private val Color.Companion.LightThemeWhite950: Color get() = Color(0xFFFAFAFA)
+private val Color.Companion.LightThemePrimary900: Color get() = Color(0xFF7952FC)
+private val Color.Companion.LightThemeDark900: Color get() = Color(0xFF13123A)
+private val Color.Companion.LightThemeDark700: Color get() = Color(0xFF7A7A90)
+private val Color.Companion.LightThemeSecondary50: Color get() = Color(0xFFF4E9FA)
 
-val ColorScheme.backgroundColor
+val ColorScheme.white900
     @Composable
     get() = if (isSystemInDarkTheme()) {
         Color.White
@@ -20,50 +20,42 @@ val ColorScheme.backgroundColor
         Color.White
     }
 
-val ColorScheme.liteGray
+val ColorScheme.white950
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.LightThemeLiteGray
+        Color.LightThemeWhite950
     } else {
-        Color.LightThemeLiteGray
+        Color.LightThemeWhite950
     }
 
-val ColorScheme.primaryGray
+val ColorScheme.dark900
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.LightThemePrimaryGray
+        Color.LightThemeDark900
     } else {
-        Color.LightThemePrimaryGray
+        Color.LightThemeDark900
     }
 
-val ColorScheme.secondaryGray
+val ColorScheme.dark700
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.LightThemeSecondaryGray
+        Color.LightThemeDark700
     } else {
-        Color.LightThemeSecondaryGray
+        Color.LightThemeDark700
     }
 
-val ColorScheme.black
+val ColorScheme.primary900
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.Black
+        Color.LightThemePrimary900
     } else {
-        Color.Black
+        Color.LightThemePrimary900
     }
 
-val ColorScheme.darkGray
+val ColorScheme.secondary50
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.LightThemeDarkGray
+        Color.LightThemeSecondary50
     } else {
-        Color.LightThemeDarkGray
-    }
-
-val ColorScheme.liteWhite
-    @Composable
-    get() = if (isSystemInDarkTheme()) {
-        Color.LightThemeLiteWhite
-    } else {
-        Color.LightThemeLiteWhite
+        Color.LightThemeSecondary50
     }
