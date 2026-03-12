@@ -5,7 +5,7 @@ on:
   
 jobs:
   deploy:
-    name: Deploy Backend
+    name: Deploy Dev Backend
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@v1
@@ -15,4 +15,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           capture_stdout: true
-          script: whoami
+          script: |
+            cd auto-events/backend
+            git pull
+            docker compose -f docker-compose-dev.yml up -d --build
