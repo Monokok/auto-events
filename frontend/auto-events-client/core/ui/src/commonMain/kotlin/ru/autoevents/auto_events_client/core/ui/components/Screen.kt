@@ -6,7 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ru.autoevents.auto_events_client.core.ui.theme.white900
+import ru.autoevents.auto_events_client.core.ui.theme.white950
 
 @Composable
 fun Screen(
@@ -23,12 +23,12 @@ fun Screen(
                     .windowInsetsPadding(WindowInsets.ime)
             )
         },
-        containerColor = MaterialTheme.colorScheme.white900,
+        containerColor = MaterialTheme.colorScheme.white950,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.white900)
+            .background(MaterialTheme.colorScheme.white950)
             .navigationBarsPadding()
-            .background(MaterialTheme.colorScheme.white900)
+            .background(MaterialTheme.colorScheme.white950)
             .statusBarsPadding()
     )
 }

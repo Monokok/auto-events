@@ -48,6 +48,8 @@ kotlin {
             implementation(libs.voyager.screenmodel)
 
             implementation(libs.kotlinx.serialization.json)
+
+            implementation(libs.kotlinx.dateTime)
         }
     }
 }

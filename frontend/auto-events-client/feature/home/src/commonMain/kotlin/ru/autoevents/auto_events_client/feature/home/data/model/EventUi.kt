@@ -1,7 +1,7 @@
 package ru.autoevents.auto_events_client.feature.home.data.model
 
 import androidx.compose.runtime.Immutable
-import kotlin.time.Instant
+import kotlinx.datetime.LocalDateTime
 
 @Immutable
 data class EventUi(
@@ -12,8 +12,8 @@ data class EventUi(
     val region: String,
     val city: String,
     val venue: String,
-    val startsAt: Instant?,
-    val endsAt: Instant?,
+    val startsAt: LocalDateTime?,
+    val endsAt: LocalDateTime?,
     val isFree: Boolean,
     val ticketUrl: String?,
     val registrationUrl: String?,
