@@ -38,6 +38,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.voyager.screenmodel)
+
+            implementation(libs.kotlinx.dateTime)
         }
     }
 }

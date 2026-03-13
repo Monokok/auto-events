@@ -28,7 +28,22 @@ kotlin {
     wasmJs()
 
     sourceSets {
+        androidMain.dependencies {
+            implementation("io.ktor:ktor-client-okhttp:3.4.1")
+        }
+        iosMain.dependencies {
+            implementation("io.ktor:ktor-client-darwin:3.4.1")
+        }
+//        webMain.dependencies {
+//            implementation("io.ktor:ktor-client-js:2.3.12")
+//        }
+
         commonMain.dependencies {
+            implementation("io.ktor:ktor-client-core:3.4.1")
+            implementation("io.ktor:ktor-client-content-negotiation:3.4.1")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.1")
+            implementation("io.ktor:ktor-client-logging:3.4.1")
+
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -48,6 +63,8 @@ kotlin {
             implementation(libs.voyager.screenmodel)
 
             implementation(libs.kotlinx.serialization.json)
+
+            implementation(libs.kotlinx.dateTime)
         }
     }
 }

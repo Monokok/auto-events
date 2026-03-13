@@ -7,5 +7,5 @@ import androidx.compose.ui.unit.dp
 val Shapes.cardRadius10
     get() = RoundedCornerShape(10.dp)
 
-val Shapes.cardRadius30
-    get() = RoundedCornerShape(30.dp)
+val Shapes.cardRadius16
+    get() = RoundedCornerShape(16.dp)
