@@ -55,3 +55,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+
+compose{
+    compose.resources {
+        publicResClass = true
+    }
+}
