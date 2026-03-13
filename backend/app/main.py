@@ -8,6 +8,7 @@ from auth.auth_router import auth_router
 from config import EnvEnum, settings
 from database.database import DatabasePgs
 from user.users_router import user_router
+from event.event_router import event_router
 from utils.logging import LOGGING_CONFIG
 
 
@@ -40,6 +41,7 @@ if settings.CORS_ALLOWED_ORIGINS:
 
 app.include_router(auth_router)
 app.include_router(user_router)
+app.include_router(event_router)
 
 
 
