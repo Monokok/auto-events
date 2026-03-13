@@ -1,16 +1,18 @@
 package ru.autoevents.auto_events_client.feature.home.ui.mainScreen
 
 import cafe.adriel.voyager.core.model.screenModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.autoevents.auto_events_client.core.ui.mvi.MviScreenModel
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
+import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventListUseCase
 import kotlin.time.Instant
 
-class MainScreenModel : MviScreenModel<Effect, Action, State>(
-    defaultState = State()
+class MainScreenModel(
+    private val getEventListUseCase: GetEventListUseCase,
+) : MviScreenModel<Effect, Action, State>(
+    defaultState = State(),
 ) {
 
     init {
@@ -26,12 +28,16 @@ class MainScreenModel : MviScreenModel<Effect, Action, State>(
     private fun getEvents() {
         screenModelScope.launch {
             pushState { it.copy(loading = true) }
-            delay(1500)
-            pushState {
-                it.copy(
-                    loading = false,
-                    events = mockedList
-                )
+            val result = getEventListUseCase.invoke()
+            when {
+                result.isSuccess -> {
+                    pushState {
+                        it.copy(
+                            loading = false,
+                            events = result.getOrNull() ?: emptyList(),
+                        )
+                    }
+                }
             }
         }
     }

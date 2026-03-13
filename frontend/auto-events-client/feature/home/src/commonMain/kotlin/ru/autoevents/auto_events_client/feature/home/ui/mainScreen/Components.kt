@@ -132,6 +132,7 @@ fun EventRow(
     modifier: Modifier = Modifier,
 ) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .shadow(
                 elevation = 4.dp,

@@ -16,6 +16,7 @@ import auto_events_client.feature.home.generated.resources.all_events
 import auto_events_client.feature.home.generated.resources.nearest_events
 import auto_events_client.feature.home.generated.resources.popular_events
 import org.jetbrains.compose.resources.stringResource
+import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
 import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.*
@@ -59,6 +60,7 @@ internal fun ScreenContent(
                 )
             }
         }
+        LoaderFullScreen(state.loading)
     }
 }
 
