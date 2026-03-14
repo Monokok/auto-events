@@ -69,6 +69,10 @@ kotlin {
     }
 }
 
+dependencies {
+    debugImplementation(libs.compose.uiTooling)
+}
+
 android {
     namespace = "ru.autoevents.auto_events_client.feature.home"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -82,9 +86,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-compose{
-    compose.resources {
-        publicResClass = true
+    compose {
+        compose.resources {
+            publicResClass = true
+        }
     }
-}
 }

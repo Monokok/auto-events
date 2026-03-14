@@ -42,6 +42,10 @@ kotlin {
     }
 }
 
+dependencies {
+    debugImplementation(libs.compose.uiTooling)
+}
+
 android {
     namespace = "org.nkoro.medanalytics.core.ui"
     compileSdk = libs.versions.android.compileSdk.get().toInt()

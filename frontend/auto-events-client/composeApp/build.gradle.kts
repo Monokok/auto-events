@@ -114,3 +114,9 @@ compose.desktop {
         }
     }
 }
+
+compose{
+    compose.resources {
+        publicResClass = true
+    }
+}

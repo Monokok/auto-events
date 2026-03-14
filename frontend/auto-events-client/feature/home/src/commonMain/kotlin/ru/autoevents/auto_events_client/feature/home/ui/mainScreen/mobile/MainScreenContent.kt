@@ -14,11 +14,15 @@ import auto_events_client.feature.home.generated.resources.Res
 import auto_events_client.feature.home.generated.resources.all_events
 import auto_events_client.feature.home.generated.resources.nearest_events
 import auto_events_client.feature.home.generated.resources.popular_events
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.MobilePreview
 import ru.autoevents.auto_events_client.core.ui.components.Screen
+import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.*
+import kotlin.time.Instant
 
 @Composable
 internal fun ScreenContent(
@@ -68,8 +72,88 @@ internal fun ScreenContent(
 private fun MobileScreenPreview() {
     MaterialTheme {
         ScreenContent(
-            state = State(),
+            state = State(
+                events = mockedList
+            ),
             onAction = {}
         )
     }
 }
+
+private val mockedList = listOf(
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        status = "published"
+    ),
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        status = "published"
+    ),
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        status = "published"
+    ),
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        status = "published"
+    ),
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        status = "published"
+    ),
+)
