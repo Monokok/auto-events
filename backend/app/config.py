@@ -1,7 +1,7 @@
 from enum import Enum
 from pathlib import Path
 
-from pydantic import AnyUrl, PostgresDsn, computed_field
+from pydantic import PostgresDsn, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     JWT_SECRET: str = "secret"
     JWT_EXPIRATION_TIME: int = 3600
-    CORS_ALLOWED_ORIGINS: list[AnyUrl] = []
+    CORS_ALLOWED_ORIGINS: list[str] = []
     SSL_ENABLE: bool = False
     SSL_CERT_FILE: str = "certfile.pem"
     SSL_KEY_FILE: str = "keyfile.pem"
