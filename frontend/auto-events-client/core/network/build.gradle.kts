@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -26,8 +27,10 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs()
 
-    sourceSets {
+    sourceSets{
         commonMain.dependencies {
+            implementation(projects.core.common)
+
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -37,27 +40,24 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(libs.koin.compose)
-            implementation(libs.koin.core)
-
-            implementation(projects.core.ui)
-            implementation(projects.core.common)
-            implementation(projects.core.network)
-
-            implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)
 
             implementation(libs.kotlinx.dateTime)
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core)
+
         }
     }
 }
 
-dependencies {
-    debugImplementation(libs.compose.uiTooling)
-}
-
 android {
-    namespace = "ru.autoevents.auto_events_client.feature.home"
+    namespace = "ru.autoevents.auto_events_client.core.network"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -67,11 +67,5 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    compose {
-        compose.resources {
-            publicResClass = true
-        }
     }
 }

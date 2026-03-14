@@ -1,4 +1,4 @@
-package ru.autoevents.auto_events_client.feature.home.domain.entity
+package ru.autoevents.auto_events_client.core.network.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
