@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     JWT_SECRET: str = "secret"
     JWT_EXPIRATION_TIME: int = 3600
     CORS_ALLOWED_ORIGINS: list[AnyUrl] = []
+    SSL_ENABLE: bool = False
+    SSL_CERT_FILE: str = "certfile.pem"
+    SSL_KEY_FILE: str = "keyfile.pem"
 
     # Database
     DB_USER: str = "autoevents"
@@ -55,7 +58,7 @@ class Settings(BaseSettings):
             password=self.DB_PASSWORD,
             host=self.DB_HOST,
             port=self.DB_PORT,
-            path="postgres"
+            path="postgres",
         )
 
 
