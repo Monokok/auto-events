@@ -1,9 +1,9 @@
 package ru.autoevents.auto_events_client.feature.home.domain
 
 import ru.autoevents.auto_events_client.core.common.extension.toLocalDateTimeWithZone
+import ru.autoevents.auto_events_client.core.network.entity.EventDto
+import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
-import ru.autoevents.auto_events_client.feature.home.domain.entity.EventDto
-import ru.autoevents.auto_events_client.feature.home.domain.entity.EventResponseDto
 
 private fun EventDto.mapToUi(): EventUi = EventUi(
     id = id ?: 0,
