@@ -7,8 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from auth.auth_router import auth_router
 from config import EnvEnum, settings
 from database.database import DatabasePgs
-from user.users_router import user_router
 from event.event_router import event_router
+from user.users_router import user_router
 from utils.logging import LOGGING_CONFIG
 
 
@@ -44,7 +44,6 @@ app.include_router(user_router)
 app.include_router(event_router)
 
 
-
 if __name__ == "__main__":
     # запуск веб-сервера uvicorn
     uvicorn.run(
@@ -52,4 +51,6 @@ if __name__ == "__main__":
         reload=settings.ENV_MODE is EnvEnum.dev,
         host="0.0.0.0",
         log_config=LOGGING_CONFIG,
+        ssl_keyfile=settings.SSL_KEY_FILE if settings.SSL_ENABLE else None,
+        ssl_certfile=settings.SSL_CERT_FILE if settings.SSL_ENABLE else None,
     )

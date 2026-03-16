@@ -37,4 +37,4 @@ ENTRYPOINT []
 USER nonroot
 
 # Run the FastAPI application by default
-CMD ["fastapi", "run", "--host", "0.0.0.0"]
+CMD ["uv", "run", "main.py"]
