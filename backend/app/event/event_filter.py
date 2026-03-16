@@ -12,7 +12,7 @@ class EventFilter(BaseFilter):
     class Constants(BaseFilter.Constants):
         model = Event
         search_model_fields = ["title", "description"]
-        allow_sort_fields = {"title", "views_count"}
+        allow_sort_fields = {"title", "views_count", "starts_at", "ends_at"}
 
         overwrite_filter_fields = {
             "city_id": lambda value: Venue.city_id == value,

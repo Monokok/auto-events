@@ -1,11 +1,13 @@
 from datetime import datetime
 
-from pydantic import AliasPath, BaseModel, Field, HttpUrl
+from pydantic import AliasPath, BaseModel, ConfigDict, Field, HttpUrl
 
 from models import EventStatusEnum
 
 
 class EventShortDTO(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
     description: str
