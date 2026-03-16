@@ -37,7 +37,7 @@ class DatabasePgs:
 
     @staticmethod
     async def create_and_init_tables(engine: AsyncEngine):
-        from models import Base, User
+        from models import Base, Event, User  # pyright: ignore[reportUnusedImport]
 
         async with engine.connect() as conn:
             await conn.run_sync(Base.metadata.create_all)
