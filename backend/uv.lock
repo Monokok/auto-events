@@ -64,6 +64,7 @@ dependencies = [
     { name = "asyncpg" },
     { name = "bcrypt" },
     { name = "fastapi", extra = ["standard"] },
+    { name = "fastapi-filter" },
     { name = "passlib" },
     { name = "pyjwt" },
     { name = "sqlalchemy" },
@@ -80,6 +81,7 @@ requires-dist = [
     { name = "asyncpg", specifier = ">=0.31.0" },
     { name = "bcrypt", specifier = "==4.3.0" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.135.1" },
+    { name = "fastapi-filter", specifier = ">=2.0.1" },
     { name = "passlib", specifier = ">=1.7.4" },
     { name = "pyjwt", specifier = ">=2.11.0" },
     { name = "sqlalchemy", specifier = ">=2.0.48" },
@@ -256,6 +258,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/2b/eb/e78ebd05a714c62a0578cdce4339cb6cd138421a7d865fbddedd7242420b/fastapi_cloud_cli-0.14.0.tar.gz", hash = "sha256:d3ecb8c942685a71df0af7bd59f463b5eff76f5818b48e5a03c6159726831e68", size = 39822, upload-time = "2026-02-25T14:19:53.535Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d9/18/7bf922ee0b6a737a9d88cf613182ecd6031f52298da893556f158eba763f/fastapi_cloud_cli-0.14.0-py3-none-any.whl", hash = "sha256:325fcb4b45e661184152da6db861d9fb718739fbcd561a4d334dbe78c026586f", size = 28350, upload-time = "2026-02-25T14:19:52.416Z" },
+]
+
+[[package]]
+name = "fastapi-filter"
+version = "2.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/ed/c36cfcd849519fd2d23051ad81a91fc5e8cfa7109496fc8a10ad565a5fe9/fastapi_filter-2.0.1.tar.gz", hash = "sha256:cffda370097af7e404f1eb188aca58b199084bfaf7cec881e40b404adf12566e", size = 9857, upload-time = "2024-12-07T17:30:06.343Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5e/88/afc022ad64d12f730141fc50758ecf9d60de5fed11335dc16e3127617f05/fastapi_filter-2.0.1-py3-none-any.whl", hash = "sha256:711d48707ec62f7c9e12a7713fc0f6a99858a9e3741b4d108102d5599e77197d", size = 11586, upload-time = "2024-12-07T17:30:05.375Z" },
 ]
 
 [[package]]
