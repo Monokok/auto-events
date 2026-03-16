@@ -11,7 +11,7 @@ class Base(DeclarativeBase):
     """
 
 
-class EventStatus(StrEnum):
+class EventStatusEnum(StrEnum):
     draft = "draft"
     published = "published"
     moderated = "moderated"
@@ -58,6 +58,8 @@ class Venue(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"))
+    lat: Mapped[float]
+    lon: Mapped[float]
 
     city: Mapped[City] = relationship(back_populates="venues", lazy="joined")
     events: Mapped[list[Event]] = relationship(back_populates="venue")
@@ -85,7 +87,7 @@ class Event(Base):
     title: Mapped[str] = mapped_column(String(100))
     description: Mapped[str] = mapped_column(String(500))
     link: Mapped[str | None] = mapped_column(String(200))
-    status: Mapped[EventStatus]
+    status: Mapped[EventStatusEnum]
     views_count: Mapped[int] = mapped_column(default=0)
     type_id: Mapped[int] = mapped_column(ForeignKey("event_types.id"))
     venue_id: Mapped[int] = mapped_column(ForeignKey("venues.id"))
