@@ -1,6 +1,7 @@
 from sqlalchemy.exc import InterfaceError
 
 from database.database import DatabasePgs
+from event.event_repository import EventRepository
 from user.user_repository import UserRepository
 from utils.exceptions import DbConnectionError
 
@@ -12,6 +13,7 @@ class UnitOfWork:
     async def __aenter__(self):
         self.session = self.session_factory()
         self.users = UserRepository(self.session)
+        self.events = EventRepository(self.session)
 
     async def __aexit__(self, exc_type, exc, tb):
         await self.session.close()
