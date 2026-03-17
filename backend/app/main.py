@@ -10,6 +10,7 @@ from database.database import DatabasePgs
 from event.event_router import event_router
 from user.users_router import user_router
 from utils.logging import LOGGING_CONFIG
+from venue.venue_router import venue_router
 
 
 @asynccontextmanager
@@ -42,6 +43,7 @@ if settings.CORS_ALLOWED_ORIGINS:
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(event_router)
+app.include_router(venue_router)
 
 
 if __name__ == "__main__":
