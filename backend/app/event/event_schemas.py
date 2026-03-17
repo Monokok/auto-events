@@ -19,6 +19,7 @@ class EventShortDTO(BaseModel):
     ends_at: datetime
 
     link: HttpUrl | None = None
+    picture_url: HttpUrl | None = None
     views_count: int
     participant_price: int | None
     viewer_price: int | None

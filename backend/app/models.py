@@ -97,6 +97,7 @@ class Event(Base):
     title: Mapped[str] = mapped_column(String(100))
     description: Mapped[str] = mapped_column(String(500))
     link: Mapped[str | None] = mapped_column(String(200))
+    picture_url: Mapped[str | None] = mapped_column(String(200))
     status: Mapped[EventStatusEnum]
     views_count: Mapped[int] = mapped_column(default=0)
     type_id: Mapped[int] = mapped_column(ForeignKey("event_types.id"))
