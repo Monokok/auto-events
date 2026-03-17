@@ -23,3 +23,10 @@ class EventShortDTO(BaseModel):
     views_count: int
     participant_price: int | None
     viewer_price: int | None
+
+
+class EventTypeDTO(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    name: str

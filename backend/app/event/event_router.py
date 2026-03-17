@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from fastapi_filter.base.filter import FilterDepends
 
 from event.event_filter import EventFilter
-from event.event_schemas import EventShortDTO
+from event.event_schemas import EventShortDTO, EventTypeDTO
 from event.event_service import EventService
 from utils.dependencies import UOW
 from utils.pagination import Page, PaginationParams
@@ -21,3 +21,10 @@ async def get_actual_events(
     pagination_params: Annotated[PaginationParams, Depends()],
 ):
     return await EventService.get_actual_events(uow, filter, pagination_params)
+
+
+@event_router.get(
+    "/types", response_model=list[EventTypeDTO], summary="Get event types"
+)
+async def get_event_types(uow: UOW):
+    return await EventService.get_event_types(uow)

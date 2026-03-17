@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import contains_eager
 
 from event.event_filter import EventFilter
-from models import Event, EventStatusEnum
+from models import Event, EventStatusEnum, EventType
 from utils.pagination import Page, PaginationParams, paginate
 
 
@@ -32,3 +32,8 @@ class EventRepository:
         query = cast(Select[tuple[Event]], filter.sort(query))
 
         return await paginate(query, self.session, pagination_params)
+
+    async def get_event_types(self) -> list[EventType]:
+        query = select(EventType).order_by(EventType.name)
+        result = await self.session.scalars(query)
+        return list(result.all())
