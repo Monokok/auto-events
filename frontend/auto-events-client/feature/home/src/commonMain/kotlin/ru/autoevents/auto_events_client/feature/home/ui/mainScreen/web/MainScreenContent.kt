@@ -31,7 +31,10 @@ internal fun ScreenContent(
     state: State,
     onAction: (Action) -> Unit
 ) {
-    Screen {
+    Screen(
+        topBar = {Header()},
+
+    ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 16.dp),
