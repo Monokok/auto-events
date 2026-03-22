@@ -8,6 +8,6 @@ import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
 class EventApi(private val client: HttpClient) {
 
     suspend fun getEvents(): EventResponseDto {
-        return client.get("/events").body()
+        return client.get("/event").body()
     }
 }

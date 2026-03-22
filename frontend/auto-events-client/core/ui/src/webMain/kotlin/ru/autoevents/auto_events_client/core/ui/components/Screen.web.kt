@@ -10,9 +10,14 @@ import ru.autoevents.auto_events_client.core.ui.theme.white950
 
 @Composable
 actual fun Screen(
+    topBar: @Composable () -> Unit,
+    bottomBar: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
     Scaffold(
+        topBar = topBar,
+        bottomBar = bottomBar,
+
         content = { padding ->
             Box(
                 content = { content() },
@@ -30,5 +35,15 @@ actual fun Screen(
             .navigationBarsPadding()
             .background(MaterialTheme.colorScheme.white950)
             .statusBarsPadding()
+    )
+}
+
+@Composable
+@WebPreview
+private fun WebScreenPreview() {
+    Screen(
+        {},
+        bottomBar = {},
+        content = {},
     )
 }

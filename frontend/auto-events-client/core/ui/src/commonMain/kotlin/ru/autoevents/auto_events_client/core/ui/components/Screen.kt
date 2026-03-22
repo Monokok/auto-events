@@ -4,4 +4,8 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-expect fun Screen(content: @Composable () -> Unit)
+expect fun Screen(
+    topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
+)

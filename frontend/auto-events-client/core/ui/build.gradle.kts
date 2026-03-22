@@ -12,7 +12,7 @@ kotlin {
     androidTarget()
     iosArm64()
     iosSimulatorArm64()
-    jvm()
+//    jvm()
     js {
         browser()
         binaries.executable()
