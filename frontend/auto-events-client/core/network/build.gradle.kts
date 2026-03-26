@@ -28,6 +28,12 @@ kotlin {
     wasmJs()
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
         commonMain.dependencies {
             implementation(projects.core.common)
 
@@ -48,6 +54,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.cio)
 
             implementation(libs.koin.compose)
             implementation(libs.koin.core)
@@ -68,4 +75,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+dependencies {
+    implementation("io.ktor:ktor-client-okhttp-jvm:3.4.1")
 }

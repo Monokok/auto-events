@@ -1,7 +1,7 @@
 package ru.autoevents.auto_events_client.core.network.client
 
 import io.ktor.client.*
-import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
@@ -12,20 +12,12 @@ import ru.autoevents.auto_events_client.core.common.BASE_URL
 
 /**
  * Создаёт экземпляр HttpClient с предустановленной поддержкой JSON.
- * Параметр engine позволяет передать платформенный движок (ожидается actual-реализация при необходимости).
  */
 
-//HttpClientEngine можно провайдить отдельно для каждой платформы свой, но пока что хорошо работает и с дефолтным
-fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
-    return engine?.let {
-        HttpClient(it) {
-            init()
-        }
-    } ?: HttpClient {
-        init()
-    }
-}
+//HttpClient реализуется для каждой платформы отдельно
+expect fun createHttpClient(): HttpClient
 
+//Общая настройка для всех платформ
 fun HttpClientConfig<*>.init() = run {
     install(ContentNegotiation) {
         json(Json {

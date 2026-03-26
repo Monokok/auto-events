@@ -8,10 +8,7 @@ import ru.autoevents.auto_events_client.core.network.client.createHttpClient
 
 val networkModule
     get() = module {
-        single<HttpClient> {
-            val engine = null
-            createHttpClient(engine)
-        }
+        single<HttpClient> { createHttpClient() }
         factory { EventApi(get()) }
         factory { VenueApi(get()) }
     }
