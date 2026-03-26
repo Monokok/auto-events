@@ -9,9 +9,13 @@ import ru.autoevents.auto_events_client.core.ui.theme.white950
 
 @Composable
 actual fun Screen(
+    topBar: @Composable () -> Unit,
+    bottomBar: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
     Scaffold(
+        topBar = topBar,
+        bottomBar = bottomBar,
         content = { padding ->
             Box(
                 content = { content() },

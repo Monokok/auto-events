@@ -1,8 +1,10 @@
 package ru.autoevents.auto_events_client.feature.home.domain
 
 import ru.autoevents.auto_events_client.core.common.extension.toLocalDateTimeWithZone
+import ru.autoevents.auto_events_client.core.network.entity.CityDto
 import ru.autoevents.auto_events_client.core.network.entity.EventDto
 import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
+import ru.autoevents.auto_events_client.feature.home.data.model.CityUi
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
 
 private fun EventDto.mapToUi(): EventUi = EventUi(
@@ -23,3 +25,11 @@ private fun EventDto.mapToUi(): EventUi = EventUi(
 
 fun EventResponseDto.mapToUi(): List<EventUi> =
     items?.map { it.mapToUi() } ?: emptyList()
+
+private fun CityDto.mapToUi(): CityUi = CityUi(
+    id = id ?: 0,
+    name = name.orEmpty(),
+)
+
+fun List<CityDto>?.mapToUi(): List<CityUi> =
+    this?.map { it.mapToUi() } ?: emptyList()

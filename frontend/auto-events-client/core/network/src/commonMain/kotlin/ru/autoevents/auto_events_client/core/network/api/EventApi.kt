@@ -7,7 +7,11 @@ import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
 
 class EventApi(private val client: HttpClient) {
 
-    suspend fun getEvents(): EventResponseDto {
-        return client.get("/event").body()
+    suspend fun getEvents(cityId: Int?): EventResponseDto {
+        return client.get("/events"){
+            url {
+                cityId?.let { parameter("city_id", it) }
+            }
+        }.body()
     }
 }

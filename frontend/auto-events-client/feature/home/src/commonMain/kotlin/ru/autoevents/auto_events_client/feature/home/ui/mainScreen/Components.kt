@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import auto_events_client.core.ui.generated.resources.ic_heart_outlined
 import auto_events_client.feature.home.generated.resources.*
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -26,6 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.theme.*
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
 import kotlin.time.Instant
+import auto_events_client.core.ui.generated.resources.Res as CoreRes
 
 @Composable
 fun EventCard(
@@ -35,15 +37,11 @@ fun EventCard(
         modifier = Modifier.width(IntrinsicSize.Min)
     ) {
         Box(
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-                .shadow(
-                    elevation = 10.dp,
-                    shape = MaterialTheme.shapes.cardRadius10,
-                    spotColor = MaterialTheme.colorScheme.primary900,
-                )
-                .padding(bottom = 5.dp)
-                .clip(MaterialTheme.shapes.cardRadius10)
+            modifier = Modifier.padding(bottom = 20.dp).shadow(
+                elevation = 10.dp,
+                shape = MaterialTheme.shapes.cardRadius10,
+                spotColor = MaterialTheme.colorScheme.primary900,
+            ).padding(bottom = 5.dp).clip(MaterialTheme.shapes.cardRadius10)
                 .background(MaterialTheme.colorScheme.white900)
         ) {
             Image(
@@ -55,11 +53,8 @@ fun EventCard(
             event.startsAt?.let { date ->
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clip(MaterialTheme.shapes.cardRadius10)
-                        .background(MaterialTheme.colorScheme.white950)
-                        .padding(8.dp, 4.5.dp)
+                    modifier = Modifier.padding(8.dp).clip(MaterialTheme.shapes.cardRadius10)
+                        .background(MaterialTheme.colorScheme.white950).padding(8.dp, 4.5.dp)
                 ) {
                     Text(
                         text = date.month.name,
@@ -132,16 +127,9 @@ fun EventRow(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .shadow(
-                elevation = 4.dp,
-                shape = MaterialTheme.shapes.cardRadius16,
-                spotColor = MaterialTheme.colorScheme.dark700
-            )
-            .clip(MaterialTheme.shapes.cardRadius16)
-            .background(MaterialTheme.colorScheme.white900)
-            .fillMaxWidth()
+        verticalAlignment = Alignment.CenterVertically, modifier = modifier.shadow(
+            elevation = 4.dp, shape = MaterialTheme.shapes.cardRadius16, spotColor = MaterialTheme.colorScheme.dark700
+        ).clip(MaterialTheme.shapes.cardRadius16).background(MaterialTheme.colorScheme.white900).fillMaxWidth()
             .padding(8.dp)
     ) {
         Image(
@@ -176,7 +164,7 @@ fun EventRow(
         }
         Spacer(modifier = Modifier.weight(1f).defaultMinSize(4.dp))
         Icon(
-            painter = painterResource(Res.drawable.ic_heart_outlined),
+            painter = painterResource(CoreRes.drawable.ic_heart_outlined),
             contentDescription = "favourite",
             tint = MaterialTheme.colorScheme.dark700,
             modifier = Modifier.clip(CircleShape).clickable {}.padding(12.dp).size(24.dp)
@@ -193,6 +181,7 @@ private fun EventCardPreview() {
         )
     }
 }
+
 
 val previewEvent = EventUi(
     id = 1,
