@@ -1,11 +1,7 @@
 package ru.autoevents.auto_events_client.core.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,12 +24,15 @@ fun Header(
     //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 20.dp).clip(RoundedCornerShape(50.dp))
-            .background(MaterialTheme.colorScheme.primary),
+        modifier = Modifier.fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .clip(RoundedCornerShape(50.dp))
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(start = 60.dp, top = 30.dp, bottom = 30.dp, end = 20.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(modifier = Modifier.padding(start = 60.dp, top = 30.dp, bottom = 30.dp, end = 20.dp)) {
+        Column {
             Text(
                 text = stringResource(Res.string.auto_events),
                 style = MaterialTheme.typography.headlineLarge,
@@ -47,7 +46,6 @@ fun Header(
             )
         }
         locationContent()
-//        ButtonLocation(modifier = Modifier.padding(end = 30.dp))
     }
 }
 

@@ -15,9 +15,9 @@ private val Color.Companion.LightThemeSecondary50: Color get() = Color(0xFFF4E9F
 val ColorScheme.white900
     @Composable
     get() = if (isSystemInDarkTheme()) {
-        Color.White
+        Color.LightThemePrimary900
     } else {
-        Color.White
+        Color.LightThemePrimary900
     }
 
 val ColorScheme.white950

@@ -27,7 +27,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs()
 
-    sourceSets{
+    sourceSets {
         commonMain.dependencies {
             implementation(projects.core.common)
 

@@ -15,6 +15,8 @@ actual fun Screen(
     content: @Composable () -> Unit,
 ) {
     Scaffold(
+        topBar = topBar,
+        bottomBar = bottomBar,
         content = { padding ->
             Box(
                 content = { content() },

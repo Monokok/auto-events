@@ -6,29 +6,67 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.autoevents.auto_events_client.core.ui.mvi.MviScreenModel
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
+import ru.autoevents.auto_events_client.feature.home.data.useCases.GetCitiesUseCase
 import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventListUseCase
 import kotlin.time.Instant
 
 class MainScreenModel(
     private val getEventListUseCase: GetEventListUseCase,
+    private val getCitiesUseCase: GetCitiesUseCase,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State(),
 ) {
 
     init {
-        pushAction(Action.GetEvents)
+        pushAction(Action.Init)
     }
 
     override suspend fun handleAction(action: Action) {
         when (action) {
-            is Action.GetEvents -> getEvents()
+            is Action.GetEvents -> getEvents(action.cityId)
+            Action.Init -> initLoad()
         }
     }
 
-    private fun getEvents() {
+    private fun initLoad() {
         screenModelScope.launch {
             pushState { it.copy(loading = true) }
-            val result = getEventListUseCase.invoke()
+            loadEvents()
+            loadCities()
+        }
+    }
+
+    private suspend fun loadEvents() {
+        val resultEvents = getEventListUseCase.invoke()
+        when {
+            resultEvents.isSuccess -> {
+                pushState {
+                    it.copy(
+                        loading = false,
+                        events = resultEvents.getOrNull() ?: emptyList(),
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun loadCities() {
+        val resultEvents = getCitiesUseCase.invoke()
+        when {
+            resultEvents.isSuccess -> {
+                pushState {
+                    it.copy(
+                        cities = resultEvents.getOrNull() ?: emptyList(),
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getEvents(cityId: Int?) {
+        screenModelScope.launch {
+            pushState { it.copy(loading = true) }
+            val result = getEventListUseCase.invoke(cityId)
             when {
                 result.isSuccess -> {
                     pushState {
