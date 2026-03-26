@@ -3,8 +3,10 @@ name = "autoevents-backend"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "alembic>=1.18.4",
     "asyncpg>=0.31.0",
     "bcrypt==4.3.0",
+    "fastapi-filter>=2.0.1",
     "fastapi[standard]>=0.135.1",
     "passlib>=1.7.4",
     "pyjwt>=2.11.0",

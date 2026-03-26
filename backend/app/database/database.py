@@ -17,17 +17,17 @@ class DatabasePgs:
     @staticmethod
     async def init_db():
         try:
-            test_engine = create_async_engine(
-                url=str(settings.POSTGRES_DB_HOST_URI),
-                echo=False,
-            )
-            is_db_exist = await DatabasePgs.check_db_existing(test_engine)
-            await test_engine.dispose()
+            # test_engine = create_async_engine(
+            #     url=str(settings.POSTGRES_DB_HOST_URI),
+            #     echo=False,
+            # )
+            # is_db_exist = await DatabasePgs.check_db_existing(test_engine)
+            # await test_engine.dispose()
             DatabasePgs.engine = create_async_engine(
                 url=str(settings.POSTGRES_DB_URI), echo=settings.DEBUG
             )
-            if not is_db_exist:
-                await DatabasePgs.create_and_init_tables(DatabasePgs.engine)
+            # if not is_db_exist:
+            #     await DatabasePgs.create_and_init_tables(DatabasePgs.engine)
 
             DatabasePgs.session_factory = async_sessionmaker(
                 DatabasePgs.engine, expire_on_commit=False
@@ -37,7 +37,7 @@ class DatabasePgs:
 
     @staticmethod
     async def create_and_init_tables(engine: AsyncEngine):
-        from models import Base, User
+        from models import Base, Event, User  # pyright: ignore[reportUnusedImport]
 
         async with engine.connect() as conn:
             await conn.run_sync(Base.metadata.create_all)
