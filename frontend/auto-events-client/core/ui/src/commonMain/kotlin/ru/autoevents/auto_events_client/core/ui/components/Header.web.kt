@@ -1,4 +1,4 @@
-package ru.autoevents.auto_events_client.feature.home.ui.mainScreen.web
+package ru.autoevents.auto_events_client.core.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +24,8 @@ import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
 
 @Composable
 fun Header(
-    //в btnLocation нужен будет колбэк для установки города
+    locationContent: @Composable () -> Unit = {},
+    //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 20.dp).clip(RoundedCornerShape(50.dp))
@@ -45,7 +46,8 @@ fun Header(
                 style = MaterialTheme.typography.inter14Normal
             )
         }
-        ButtonLocation(modifier = Modifier.padding(end = 30.dp))
+        locationContent()
+//        ButtonLocation(modifier = Modifier.padding(end = 30.dp))
     }
 }
 

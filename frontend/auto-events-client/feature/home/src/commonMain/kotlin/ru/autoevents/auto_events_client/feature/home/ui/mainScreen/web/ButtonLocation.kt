@@ -34,12 +34,22 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.feature.home.data.model.CityUi
 
+
+/**
+ * Компонент кнопки, которая задает локацию через выпадающий список из городов
+ * @param cities список городов, которые доступны для выбора
+ * @param isExpanded параметр, определяющий раскрыт ли список (по умолчанию - false)
+ * @param defaultSelectedCity город, устанавливаемый по умолчанию в UI кнопки
+ * @param setLocation колбэк для установки выбранного города
+ * @param resetLocation колбэк для сброса выбранного города
+ */
 @Composable
 fun ButtonLocation(
     modifier: Modifier = Modifier,
+    cities: List<CityUi>,
     isExpanded: Boolean = false,
-    defaultSelectedCityName: String? = null,
-    setLocation: () -> Unit = {},
+    defaultSelectedCity: CityUi? = null,
+    setLocation: (CityUi) -> Unit = {},
     resetLocation: () -> Unit = {},
 ) {
 
@@ -47,7 +57,7 @@ fun ButtonLocation(
 
     var selectedCity by remember {
         mutableStateOf<CityUi?>(
-            if (defaultSelectedCityName != null) CityUi("Наименование города", 0)
+            if (defaultSelectedCity != null) CityUi("Наименование города", 0)
             else null
         )
     }
@@ -57,17 +67,6 @@ fun ButtonLocation(
         resetLocation()     //вызов прокинутой функции - для установки состояния где-то свыше
         selectedCity = null //прекращаем рисовать имя города
     }
-
-    val cityList = listOf(
-        CityUi("Москва", 0),
-        CityUi("Иваново", 1),
-        CityUi("Санкт-Петербург", 2),
-        CityUi("Петропавловск Камчатский", 3),
-        CityUi("Нижний Новгород", 4),
-        CityUi("Владимир", 5),
-        CityUi("Город с очень длинным названием", 6),
-        CityUi("Шуя", 7),
-    )
 
     Box(
         modifier = modifier.width(210.dp).clip(RoundedCornerShape(50.dp))
@@ -119,7 +118,7 @@ fun ButtonLocation(
                 Box {
                     DropdownMenu(
                         expanded = showCityDropdownMenu, onDismissRequest = { showCityDropdownMenu = false }) {
-                        cityList.forEach { cityElement ->
+                        cities.forEach { cityElement ->
                             DropdownMenuItem(text = {
                                 Text(
                                     cityElement.name,
@@ -152,7 +151,16 @@ fun ButtonLocation(
 @Composable
 private fun ButtonLocationPreviewExpanded() {
     Row {
-        ButtonLocation(isExpanded = true)
+        ButtonLocation(isExpanded = true, cities = listOf(
+            CityUi("Москва", 0),
+            CityUi("Иваново", 1),
+            CityUi("Санкт-Петербург", 2),
+            CityUi("Петропавловск Камчатский", 3),
+            CityUi("Нижний Новгород", 4),
+            CityUi("Владимир", 5),
+            CityUi("Город с очень длинным названием", 6),
+            CityUi("Шуя", 7),
+        ))
     }
 }
 
@@ -160,7 +168,18 @@ private fun ButtonLocationPreviewExpanded() {
 @Composable
 private fun ButtonLocationPreview() {
     Row {
-        ButtonLocation(isExpanded = false)
+        ButtonLocation(isExpanded = false,
+            cities = listOf(
+                CityUi("Москва", 0),
+                CityUi("Иваново", 1),
+                CityUi("Санкт-Петербург", 2),
+                CityUi("Петропавловск Камчатский", 3),
+                CityUi("Нижний Новгород", 4),
+                CityUi("Владимир", 5),
+                CityUi("Город с очень длинным названием", 6),
+                CityUi("Шуя", 7),
+            )
+            )
     }
 }
 
@@ -168,7 +187,18 @@ private fun ButtonLocationPreview() {
 @Composable
 private fun ButtonLocationCityIsSelected() {
     Row {
-        ButtonLocation(isExpanded = false, defaultSelectedCityName = "Наименование города")
+        ButtonLocation(isExpanded = false, defaultSelectedCity = CityUi("Наименование города", 0),
+            cities = listOf(
+                CityUi("Москва", 0),
+                CityUi("Иваново", 1),
+                CityUi("Санкт-Петербург", 2),
+                CityUi("Петропавловск Камчатский", 3),
+                CityUi("Нижний Новгород", 4),
+                CityUi("Владимир", 5),
+                CityUi("Город с очень длинным названием", 6),
+                CityUi("Шуя", 7),
+            )
+        )
     }
 }
 

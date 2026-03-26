@@ -1,4 +1,4 @@
-package ru.autoevents.auto_events_client.feature.home.ui.mainScreen.web
+package ru.autoevents.auto_events_client.feature.home.ui.eventScreen.web
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

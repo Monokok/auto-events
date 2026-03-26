@@ -18,6 +18,7 @@ import auto_events_client.feature.home.generated.resources.popular_events
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import ru.autoevents.auto_events_client.core.ui.components.Footer
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
@@ -25,16 +26,14 @@ import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.*
 import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.mobile.ScreenContent
 import kotlin.time.Instant
+import ru.autoevents.auto_events_client.core.ui.components.Header
 
 @Composable
 internal fun ScreenContent(
     state: State,
     onAction: (Action) -> Unit
 ) {
-    Screen(
-        topBar = {Header()},
-
-    ) {
+    Screen() {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 16.dp),

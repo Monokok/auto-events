@@ -1,4 +1,4 @@
-package ru.autoevents.auto_events_client.feature.home.ui.mainScreen.web
+package ru.autoevents.auto_events_client.core.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
