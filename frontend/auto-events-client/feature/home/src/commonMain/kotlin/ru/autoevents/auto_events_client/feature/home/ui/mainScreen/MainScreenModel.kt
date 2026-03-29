@@ -8,11 +8,13 @@ import ru.autoevents.auto_events_client.core.ui.mvi.MviScreenModel
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.data.useCases.GetCitiesUseCase
 import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventListUseCase
+import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventTypesListUseCase
 import kotlin.time.Instant
 
 class MainScreenModel(
     private val getEventListUseCase: GetEventListUseCase,
     private val getCitiesUseCase: GetCitiesUseCase,
+    private val getEventTypesUseCase: GetEventTypesListUseCase,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State(),
 ) {
@@ -24,7 +26,9 @@ class MainScreenModel(
     override suspend fun handleAction(action: Action) {
         when (action) {
             is Action.GetEvents -> getEvents(action.cityId)
+            is Action.ChangeFilter -> getEventsByFilter(cityId = action.cityId, typeId = action.typeId)
             Action.Init -> initLoad()
+            Action.GetEventTypes -> loadEventTypes()
         }
     }
 
@@ -33,11 +37,17 @@ class MainScreenModel(
             pushState { it.copy(loading = true) }
             loadEvents()
             loadCities()
+            loadEventTypes()
         }
     }
 
-    private suspend fun loadEvents() {
-        val resultEvents = getEventListUseCase.invoke()
+    /**
+     * получение событий через API
+     * @param [cityId] id города для фильтра. if null - по всем городам
+     * @param [typeId] id типа для фильтра. if null - по всем событиям
+     */
+    private suspend fun loadEvents(cityId: Int? = null, typeId: Int? = null) {
+        val resultEvents = getEventListUseCase.invoke(cityId = cityId, typeId = typeId)
         when {
             resultEvents.isSuccess -> {
                 pushState {
@@ -77,6 +87,47 @@ class MainScreenModel(
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Метод для получения списка типов событий (дрифт, гонка и пр.)
+     */
+    private fun loadEventTypes() {
+        screenModelScope.launch {
+            pushState { it.copy(loading = true) }
+            val result = getEventTypesUseCase.invoke()
+            when {
+                result.isSuccess -> {
+                    pushState {
+                        it.copy(
+                            loading = false,
+                            eventTypes = result.getOrNull() ?: emptyList(),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getEventsByFilter(cityId: Int?, typeId: Int?) {
+        screenModelScope.launch {
+            // обновляем выбранный тип - перерисовка интерфейса
+            pushState {
+                state ->
+                state.copy(
+                    selectedCityId = cityId,
+                    selectedEventTypeId = typeId,
+                    eventTypes = state.eventTypes.map{
+                        it.copy(
+                            isSelected = it.id == typeId
+                        )
+                    }
+                )
+            }
+
+            //загружаем события с фильтром
+            loadEvents(cityId = cityId, typeId = typeId)
         }
     }
 }

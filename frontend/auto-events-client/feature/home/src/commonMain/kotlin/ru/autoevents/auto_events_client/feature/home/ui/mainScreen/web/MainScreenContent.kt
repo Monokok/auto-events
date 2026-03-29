@@ -38,10 +38,10 @@ internal fun ScreenContent(
                 ButtonLocation(
                     cities = state.cities,
                     setLocation = { city ->
-                        onAction(Action.GetEvents(city.id))
+                        onAction(Action.ChangeFilter(cityId = city.id, typeId = state.selectedEventTypeId))
                     },
                     resetLocation = {
-                        onAction(Action.GetEvents(null))
+                        onAction(Action.ChangeFilter(cityId = null, typeId = state.selectedEventTypeId))
                     }
                 )
             }
@@ -66,6 +66,19 @@ internal fun ScreenContent(
                         EventCard(event)
                     }
                 }
+            }
+            item{
+                EventTypesBar(
+                    eventTypes = state.eventTypes,
+                    onEventTypeClick = {
+                        type -> onAction(
+                            Action.ChangeFilter(cityId = state.selectedCityId, typeId = type.id)
+                        )
+                    },
+                    clearEventTypes = {
+                        onAction(Action.ChangeFilter(cityId = state.selectedCityId, typeId = null))
+                    },
+                )
             }
             item {
                 ChapterRow(

@@ -3,6 +3,7 @@ package ru.autoevents.auto_events_client.feature.home.di
 import org.koin.dsl.module
 import ru.autoevents.auto_events_client.feature.home.data.useCases.GetCitiesUseCase
 import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventListUseCase
+import ru.autoevents.auto_events_client.feature.home.data.useCases.GetEventTypesListUseCase
 import ru.autoevents.auto_events_client.feature.home.domain.EventRepository
 import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.MainScreenModel
 
@@ -10,8 +11,9 @@ val homeScreensModule
     get() = module {
         single { EventRepository(get(), get()) }
         single { GetEventListUseCase(get()) }
+        single { GetEventTypesListUseCase(get()) }
         single { GetCitiesUseCase(get()) }
 
-        factory { MainScreenModel(get(), get()) }
+        factory { MainScreenModel(get(), get(), get()) }
 
     }

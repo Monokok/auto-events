@@ -4,8 +4,11 @@ import ru.autoevents.auto_events_client.core.common.extension.toLocalDateTimeWit
 import ru.autoevents.auto_events_client.core.network.entity.CityDto
 import ru.autoevents.auto_events_client.core.network.entity.EventDto
 import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
+import ru.autoevents.auto_events_client.core.network.entity.EventTypeResponseDto
 import ru.autoevents.auto_events_client.feature.home.data.model.CityUi
+import ru.autoevents.auto_events_client.feature.home.data.model.EventTypeUi
 import ru.autoevents.auto_events_client.feature.home.data.model.EventUi
+import kotlin.jvm.JvmName
 
 private fun EventDto.mapToUi(): EventUi = EventUi(
     id = id ?: 0,
@@ -31,5 +34,15 @@ private fun CityDto.mapToUi(): CityUi = CityUi(
     name = name.orEmpty(),
 )
 
+@JvmName("mapCityListToUi")         //fix конфликта сигнатур на уровне JVM
 fun List<CityDto>?.mapToUi(): List<CityUi> =
+    this?.map { it.mapToUi() } ?: emptyList()
+
+private fun EventTypeResponseDto.mapToUi(): EventTypeUi = EventTypeUi(
+    id = id ?: 0,
+    name = name.orEmpty(),
+)
+
+@JvmName("mapEventTypeListToUi")    //fix конфликта сигнатур на уровне JVM
+fun List<EventTypeResponseDto>?.mapToUi(): List<EventTypeUi> =
     this?.map { it.mapToUi() } ?: emptyList()

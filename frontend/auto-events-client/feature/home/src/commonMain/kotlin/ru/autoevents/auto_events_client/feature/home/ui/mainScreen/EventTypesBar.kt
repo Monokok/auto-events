@@ -1,25 +1,22 @@
 package ru.autoevents.auto_events_client.feature.home.ui.mainScreen
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import ru.autoevents.auto_events_client.core.ui.theme.white900
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,18 +27,13 @@ import auto_events_client.feature.home.generated.resources.all
 import auto_events_client.feature.home.generated.resources.event_type_content_description
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ru.autoevents.auto_events_client.core.ui.components.MobilePreview
-import ru.autoevents.auto_events_client.core.ui.components.WebPreview
-import ru.autoevents.auto_events_client.core.ui.theme.cardRadius10
-import ru.autoevents.auto_events_client.core.ui.theme.cardRadius16
-import ru.autoevents.auto_events_client.core.ui.theme.dark700
-import ru.autoevents.auto_events_client.core.ui.theme.dark900
-import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
-import ru.autoevents.auto_events_client.core.ui.theme.primary900
+import ru.autoevents.auto_events_client.core.ui.theme.*
+import ru.autoevents.auto_events_client.feature.home.data.model.EventTypeUi
 import auto_events_client.feature.home.generated.resources.Res as ResFeature
 
 /**
  * Бар с кнопками для выбора типов событий для фильтра
+ * Бар сам должен понимать - как рисовать кнопку "Все"
  * @param [eventTypes]
  *
  */
@@ -49,36 +41,83 @@ import auto_events_client.feature.home.generated.resources.Res as ResFeature
 fun EventTypesBar(
     eventTypes: List<EventTypeUi>,
     onEventTypeClick: (EventTypeUi) -> Unit,
-    ){
-    LazyRow {
-        items(eventTypes) {
-            eventType ->
+    clearEventTypes: () -> Unit,
+) {
+    val isResetFilterButtonActive =
+        eventTypes.none { it.isSelected } //если хотя бы один фильтр применен - false (кнопка "Все" не применена), иначе - true
+    LazyRow(
+        modifier = Modifier,
+        contentPadding = PaddingValues(horizontal = 12.dp) //отступы по краям
+        , horizontalArrangement = Arrangement.spacedBy(8.dp) //отступы между кнопочками
+    ) {
+        item {
+            ResetEventTypeButton(
+                clearEventTypes,
+                isResetFilterButtonActive
+            )
+        }
+        items(eventTypes) { eventType ->
             EventTypeButton(
-                eventType
+                eventType,
+                onEventTypeClick = {
+                    //it.isSelected = !it.isSelected
+                    onEventTypeClick(it) //isSelected менять сверху
+                },
             )
         }
     }
-
-
 }
 
 @Composable
 private fun EventTypeButton(
     type: EventTypeUi,
+    onEventTypeClick: (value: EventTypeUi) -> Unit, //callback для применения установленного значения свыше - пробрасываем evenTypeUi, из которого возьмем id, name - мб тоже где-то пригодиться
     icon: Painter? = null,
     primaryColor: Color? = null,
     onPrimaryColor: Color? = null,
-){
-    val isSelected by remember{mutableStateOf(false)}
-    val backgroundColor = primaryColor ?: MaterialTheme.colorScheme.primary
-    val contentColor = onPrimaryColor ?: MaterialTheme.colorScheme.onPrimary
+) {
+    val isSelected = type.isSelected
+    val backgroundColor by animateColorAsState(
+        targetValue = if (isSelected) {
+            MaterialTheme.colorScheme.primary //выделенность
+        } else {
+            MaterialTheme.colorScheme.secondaryContainer //не выделенность
+        },
+        label = "bgColor"
+    )
+
+    val contentColor by animateColorAsState(
+        targetValue = if (isSelected) {
+            MaterialTheme.colorScheme.onPrimary
+        } else {
+            MaterialTheme.colorScheme.onSecondaryContainer
+        },
+        label = "contentColor"
+    )
+
+    val scale by animateFloatAsState(
+        targetValue = if (isSelected) 1.05f else 1f,
+        label = "scale"
+    )
+
+    val elevation by animateDpAsState(
+        targetValue = if (isSelected) 6.dp else 0.dp,
+        label = "elevation"
+    )
 
     Row(
-        modifier = Modifier.width(80.dp).height(40.dp)
+        modifier = Modifier.scale(scale)
+            .shadow(elevation, shape = MaterialTheme.shapes.cardRadius16)
+            .wrapContentWidth().height(40.dp)
             .clip(MaterialTheme.shapes.cardRadius10)
-            .background(color = backgroundColor, shape = MaterialTheme.shapes.cardRadius16),
+            .clickable {
+                //Вызов callback. Логика изменения вне компонента
+                onEventTypeClick(type)
+            }
+            .background(color = backgroundColor, shape = MaterialTheme.shapes.cardRadius16)
+            .padding(horizontal = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         icon?.let {
             Icon(
@@ -102,42 +141,61 @@ private fun EventTypeButton(
     }
 }
 
-private fun getResetEventTypeButton(): @Composable () -> Unit {
-    return {
-        EventTypeButton(
-            EventTypeUi(
-                name = stringResource(ResFeature.string.all),
-                id = -1
-            ),
-            painterResource(Res.drawable.ic_all),
-            MaterialTheme.colorScheme.primary900,
-            MaterialTheme.colorScheme.white900
-        )
-    }
+@Composable
+private fun ResetEventTypeButton(
+    clearEventTypes: () -> Unit //callback игнорирования всех ранее выбранных фильтров и установка фильтрации "Все"
+    ,
+    isSelected: Boolean = false
+) {
+    EventTypeButton(
+        EventTypeUi(
+            name = stringResource(ResFeature.string.all), id = -1, isSelected = isSelected
+        ),
+        { clearEventTypes() },
+        painterResource(Res.drawable.ic_all),
+        MaterialTheme.colorScheme.primary900,
+        MaterialTheme.colorScheme.white900
+    )
 }
 
 @Preview
 @Composable
-private fun EventTypeButton_Preview(){
-    getResetEventTypeButton().invoke()
+private fun EventTypeButton_Preview() {
+    ResetEventTypeButton({ println("Фильтры сброшены") })
 }
 
 @Composable
 @Preview(widthDp = 1000)
-fun EventTypesBar_Preview(){
-    EventTypesBar(
-        eventTypes = getEventTypesMock(),
-        onEventTypeClick = {},
+fun EventTypesBar_Preview() {
+    var eventTypes by remember { mutableStateOf(getEventTypesMock()) }
 
+
+    EventTypesBar(
+        eventTypes = eventTypes,
+        onEventTypeClick = { clickedType ->
+            eventTypes = eventTypes.map { type ->
+                if (type.id == clickedType.id) {
+                    type.copy(isSelected = !type.isSelected)
+                } else {
+                    type
+                }
+            }
+        },
+        clearEventTypes = {
+
+            eventTypes = eventTypes.map { type ->
+                if (type.isSelected) {
+                    type.copy(isSelected = false)
+                } else {
+                    type
+                }
+            }
+        },
     )
 }
 
-data class EventTypeUi(
-    val name: String,
-    val id: Int
-)
 
-fun getEventTypesMock(): List<EventTypeUi>{
+fun getEventTypesMock(): List<EventTypeUi> {
     return listOf(
         EventTypeUi(
             "Автовстреча",
