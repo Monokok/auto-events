@@ -11,4 +11,6 @@
     <string name="location">Локация</string>
     <string name="main_page">Главная</string>
     <string name="current_location">Текущая локация</string>
+    <string name="event_type_content_description">Событие с типом: %s</string>
+    <string name="all">Все</string>
 </resources>
