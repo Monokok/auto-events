@@ -54,6 +54,13 @@ internal fun ScreenContent(
                 }
             }
             item {
+                EventTypesBar(
+                    eventTypes = getEventTypesMock(),
+                    onEventTypeClick = {},
+                    clearEventTypes = { }
+                )
+            }
+            item {
                 ChapterRow(
                     chapterName = stringResource(Res.string.popular_events),
                     allText = stringResource(Res.string.all_events),
