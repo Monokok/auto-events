@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_filter.base.filter import FilterDepends
 
 from event.event_filter import EventFilter
@@ -28,3 +28,15 @@ async def get_actual_events(
 )
 async def get_event_types(uow: UOW):
     return await EventService.get_event_types(uow)
+
+
+@event_router.get(
+    "/{event_id}",
+    response_model=EventShortDTO,
+    summary="Get event by id",
+)
+async def get_event_by_id(event_id: int, uow: UOW):
+    event = await EventService.get_event_by_id(uow, event_id)
+    if event is None:
+        raise HTTPException(status_code=404, detail="Event not found")
+    return event

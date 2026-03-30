@@ -3,10 +3,10 @@ from typing import cast
 
 from sqlalchemy import Select, and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import contains_eager
+from sqlalchemy.orm import contains_eager, joinedload
 
 from event.event_filter import EventFilter
-from models import Event, EventStatusEnum, EventType
+from models import Event, EventStatusEnum, EventType, Venue
 from utils.pagination import Page, PaginationParams, paginate
 
 
@@ -37,3 +37,15 @@ class EventRepository:
         query = select(EventType).order_by(EventType.name)
         result = await self.session.scalars(query)
         return list(result.all())
+    
+    async def get_by_id(self, event_id: int) -> Event | None:
+        query = (
+            select(Event)
+            .where(Event.id == event_id)
+            .options(
+                joinedload(Event.type),
+                joinedload(Event.venue).joinedload(Venue.city),
+            )
+        )
+        result = await self.session.scalar(query)
+        return result
