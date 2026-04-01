@@ -3,7 +3,7 @@ package ru.autoevents.auto_events_client
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.Navigator
-import ru.autoevents.auto_events_client.feature.home.ui.mainScreen.MainScreen
+import ru.autoevents.auto_events_client.feature.home.ui.main.MainScreen
 
 @Composable
 fun App() {
