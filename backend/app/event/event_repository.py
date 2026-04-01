@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from datetime import UTC, datetime
 from typing import cast
 
@@ -10,7 +11,20 @@ from models import Event, EventStatusEnum, EventType, Venue
 from utils.pagination import Page, PaginationParams, paginate
 
 
-class EventRepository:
+class IEventRepository(ABC):
+    @abstractmethod
+    async def get_all_actual_page(
+        self, filter: EventFilter, pagination_params: PaginationParams
+    ) -> Page[Event]: ...
+
+    @abstractmethod
+    async def get_event_types(self) -> list[EventType]: ...
+
+    @abstractmethod
+    async def get_by_id(self, event_id: int) -> Event | None: ...
+
+
+class EventRepository(IEventRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
@@ -37,7 +51,7 @@ class EventRepository:
         query = select(EventType).order_by(EventType.name)
         result = await self.session.scalars(query)
         return list(result.all())
-    
+
     async def get_by_id(self, event_id: int) -> Event | None:
         query = (
             select(Event)

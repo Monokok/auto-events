@@ -1,13 +1,33 @@
+from abc import ABC, abstractmethod
+
 from sqlalchemy.exc import InterfaceError
 
 from database.database import DatabasePgs
-from event.event_repository import EventRepository
-from user.user_repository import UserRepository
+from event.event_repository import EventRepository, IEventRepository
+from user.user_repository import IUserRepository, UserRepository
 from utils.exceptions import DbConnectionError
-from venue.venue_repository import VenueRepository
+from venue.venue_repository import IVenueRepository, VenueRepository
 
 
-class UnitOfWork:
+class IUnitOfWork(ABC):
+    users: IUserRepository
+    events: IEventRepository
+    venues: IVenueRepository
+
+    @abstractmethod
+    async def __aenter__(self): ...
+
+    @abstractmethod
+    async def __aexit__(self, exc_type, exc, tb): ...
+
+    @abstractmethod
+    async def commit(self): ...
+
+    @abstractmethod
+    async def rollback(self): ...
+
+
+class UnitOfWork(IUnitOfWork):
     def __init__(self):
         self.session_factory = DatabasePgs.session_factory
 
