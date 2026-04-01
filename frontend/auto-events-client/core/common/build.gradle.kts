@@ -12,7 +12,7 @@ kotlin {
     androidTarget()
     iosArm64()
     iosSimulatorArm64()
-    jvm()
+
     js {
         browser()
         binaries.executable()
@@ -23,8 +23,6 @@ kotlin {
         browser()
         binaries.executable()
     }
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs()
 
     sourceSets{
         commonMain.dependencies {

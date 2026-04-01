@@ -13,7 +13,7 @@ kotlin {
     androidTarget()
     iosArm64()
     iosSimulatorArm64()
-    jvm()
+
     js {
         browser()
         binaries.executable()
@@ -24,8 +24,6 @@ kotlin {
         browser()
         binaries.executable()
     }
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs()
 
     sourceSets {
         androidMain.dependencies {
@@ -75,7 +73,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-dependencies {
-    implementation("io.ktor:ktor-client-okhttp-jvm:3.4.1")
 }
