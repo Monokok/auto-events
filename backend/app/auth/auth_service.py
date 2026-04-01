@@ -4,7 +4,7 @@ import jwt
 from passlib.context import CryptContext
 
 from config import settings
-from database.uow import UnitOfWork
+from database.uow import IUnitOfWork
 from models import User
 from user.user_schemas import UserCreateDTO, UserDTO, UserLoginDTO
 from utils.exceptions import (
@@ -23,28 +23,34 @@ class AuthService:
 
     crypto_context = CryptContext(schemes=["bcrypt"])
 
+    uow: IUnitOfWork
+
+    def __init__(self, uow: IUnitOfWork) -> None:
+        self.uow = uow
+
     # метод регистрации пользователя
-    @staticmethod
+
     async def register(
+        self,
         user: UserCreateDTO,
-        uow: UnitOfWork,
     ) -> UserDTO:
-        async with uow:
-            check = await uow.users.get_by_username_or_email(user.username, user.email)
+        async with self.uow:
+            check = await self.uow.users.get_by_username_or_email(
+                user.username, user.email
+            )
             if check is not None:
                 raise UserAlreadyExist()
             hashed_password = AuthService.crypto_context.hash(user.password)
             new_user = User(
                 username=user.username, email=user.email, password=hashed_password
             )
-            new_user = await uow.users.create_user(new_user)
+            new_user = await self.uow.users.create_user(new_user)
             return UserDTO.model_validate(new_user, from_attributes=True)
 
     # метод аутентификации пользователя
-    @staticmethod
-    async def login(user: UserLoginDTO, uow: UnitOfWork) -> str:
-        async with uow:
-            db_user = await uow.users.get_by_username(user.username)
+    async def login(self, user: UserLoginDTO) -> str:
+        async with self.uow:
+            db_user = await self.uow.users.get_by_username(user.username)
             if db_user is None:
                 raise UserNotExist
             pass_verify = AuthService.crypto_context.verify(
@@ -56,8 +62,7 @@ class AuthService:
             return token
 
     # метод авторизации пользователя
-    @staticmethod
-    async def authorize(token: str, uow: UnitOfWork):
+    async def authorize(self, token: str):
         decoded_token = AuthService._verify_jwt_token(token)
         if (
             decoded_token is None
@@ -69,8 +74,8 @@ class AuthService:
         if decoded_token["exp"] - int(time.time()) < 0:
             raise TokenExpire
         user_id = int(decoded_token["sub"])
-        async with uow:
-            user = await uow.users.get_by_id(user_id)
+        async with self.uow:
+            user = await self.uow.users.get_by_id(user_id)
             if user is None:
                 raise UserNotExist
             return UserDTO.model_validate(user, from_attributes=True)

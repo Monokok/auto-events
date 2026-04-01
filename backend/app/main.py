@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 import uvicorn
+from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,6 +10,7 @@ from config import EnvEnum, settings
 from database.database import DatabasePgs
 from event.event_router import event_router
 from user.users_router import user_router
+from utils.di import di_container
 from utils.logging import LOGGING_CONFIG
 from venue.venue_router import venue_router
 
@@ -17,6 +19,7 @@ from venue.venue_router import venue_router
 async def app_lifespan(app: FastAPI):
     await DatabasePgs.init_db()  # инициализация БД при запуске
     yield
+    await app.state.dishka_container.close()
 
 
 app = FastAPI(
@@ -44,6 +47,9 @@ app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(event_router)
 app.include_router(venue_router)
+
+# Настройка DI
+setup_dishka(di_container, app)
 
 
 if __name__ == "__main__":

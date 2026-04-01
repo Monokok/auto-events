@@ -1,6 +1,8 @@
 from logging import getLogger
 from typing import Annotated, Final
 
+from dishka import FromDishka
+from dishka.integrations.fastapi import DishkaRoute, inject
 from fastapi import (
     APIRouter,
     Depends,
@@ -13,7 +15,6 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from auth.auth_schemas import AccessTokenDTO
 from auth.auth_service import AuthService
 from user.user_schemas import UserCreateDTO, UserDTO, UserLoginDTO
-from utils.dependencies import UOW
 from utils.exceptions import (
     InvalidCredentials,
     InvalidToken,
@@ -23,7 +24,7 @@ from utils.exceptions import (
 )
 
 logger = getLogger(__name__)
-auth_router = APIRouter(prefix="/auth", tags=["Authorization"])
+auth_router = APIRouter(prefix="/auth", tags=["Authorization"], route_class=DishkaRoute)
 
 BEARER_HEADER: Final = HTTPBearer(
     scheme_name="AuthHeader",
@@ -33,9 +34,9 @@ BEARER_HEADER: Final = HTTPBearer(
 
 
 @auth_router.post("/register", response_model=UserDTO)
-async def register(new_user: UserCreateDTO, uow: UOW):
+async def register(new_user: UserCreateDTO, auth_service: FromDishka[AuthService]):
     try:
-        result_user = await AuthService.register(new_user, uow)
+        result_user = await auth_service.register(new_user)
         logger.info(
             "User (id=%s,username=%s) has successfully registered",
             result_user.id,
@@ -44,7 +45,8 @@ async def register(new_user: UserCreateDTO, uow: UOW):
         return result_user
     except UserAlreadyExist as e:
         logger.info(
-            "Registration rejected: User with the same cridentials (username=%s,email=%s) already exist",
+            "Registration rejected: User with the same cridentials "
+            "(username=%s,email=%s) already exist",
             new_user.username,
             new_user.email,
         )
@@ -55,9 +57,9 @@ async def register(new_user: UserCreateDTO, uow: UOW):
 
 # эндпоинт входа в аккаунт
 @auth_router.post("/login", response_model=AccessTokenDTO)
-async def login(user: UserLoginDTO, uow: UOW):
+async def login(user: UserLoginDTO, auth_service: FromDishka[AuthService]):
     try:
-        token = await AuthService.login(user, uow)
+        token = await auth_service.login(user)
         logger.info("User (username=%s) has successfully logged in", user.username)
 
         return AccessTokenDTO(access_token=token)
@@ -72,11 +74,12 @@ async def login(user: UserLoginDTO, uow: UOW):
 
 
 # метод авторизации эндпоинта http, используется при помощи Depends
+@inject
 async def authorize_http_endpoint(
     auth_header: Annotated[
         HTTPAuthorizationCredentials | None, Security(BEARER_HEADER)
     ],
-    uow: UOW,
+    auth_service: FromDishka[AuthService],
 ) -> UserDTO:
     if auth_header is None:
         logger.info("HTTP authorization rejected: header not found")
@@ -84,7 +87,7 @@ async def authorize_http_endpoint(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
         )
     try:
-        user = await AuthService.authorize(auth_header.credentials, uow)
+        user = await auth_service.authorize(auth_header.credentials)
         logger.debug(
             "HTTP authorization success: User (username=%s) is verified", user.username
         )

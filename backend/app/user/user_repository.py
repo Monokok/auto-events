@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 from sqlalchemy import or_, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,7 +8,29 @@ from models import User
 from utils.exceptions import DbIncorrectData
 
 
-class UserRepository:
+class IUserRepository(ABC):
+    @abstractmethod
+    async def get_by_id(self, user_id: int) -> User | None: ...
+
+    @abstractmethod
+    async def get_by_username(self, username: str) -> User | None: ...
+
+    @abstractmethod
+    async def get_by_username_or_email(
+        self, username: str, email: str
+    ) -> User | None: ...
+
+    @abstractmethod
+    async def get_all(self, limit: int, offset: int) -> list[User]: ...
+
+    @abstractmethod
+    async def create_user(self, user: User) -> User: ...
+
+    @abstractmethod
+    async def update_user(self, update_dict: dict) -> None: ...
+
+
+class UserRepository(IUserRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 

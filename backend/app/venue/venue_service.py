@@ -1,11 +1,15 @@
-from database.uow import UnitOfWork
+from database.uow import IUnitOfWork
 from venue.venue_schemas import CityDTO
 
 
 class VenueService:
-    @staticmethod
-    async def get_cities(uow: UnitOfWork) -> list[CityDTO]:
-        async with uow:
-            cities = await uow.venues.get_all_cities()
+    uow: IUnitOfWork
+
+    def __init__(self, uow: IUnitOfWork) -> None:
+        self.uow = uow
+
+    async def get_cities(self) -> list[CityDTO]:
+        async with self.uow:
+            cities = await self.uow.venues.get_all_cities()
 
         return [CityDTO.model_validate(c) for c in cities]
