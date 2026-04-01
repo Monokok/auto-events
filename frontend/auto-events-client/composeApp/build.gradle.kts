@@ -1,4 +1,4 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -26,8 +26,6 @@ kotlin {
             isStatic = true
         }
     }
-
-//    jvm()
 
     js {
         browser()
@@ -66,10 +64,6 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-//        jvmMain.dependencies {
-//            implementation(compose.desktop.currentOs)
-//            implementation(libs.kotlinx.coroutinesSwing)
-//        }
     }
 }
 
@@ -102,18 +96,6 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
-}
-
-compose.desktop {
-    application {
-        mainClass = "ru.autoevents.auto_events_client.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "ru.autoevents.auto_events_client"
-            packageVersion = "1.0.0"
-        }
-    }
 }
 
 compose{
