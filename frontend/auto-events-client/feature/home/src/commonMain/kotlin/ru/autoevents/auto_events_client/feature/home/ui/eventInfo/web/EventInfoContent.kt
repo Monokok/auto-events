@@ -136,10 +136,13 @@ private fun EventBodyContent(
                 )
 
                 // Дата
-                InfoColumn(
+                event.startsAt?.let {date ->
+                    InfoColumn(
 //                    icon = Icons.Default.Event,
-                    label = "Дата", value = event.startsAt.toString()
-                )
+                        label = "Дата",
+                        value = "${date.day} ${date.month.name} ${date.year}",
+                    )
+                }
 
                 // Локация
                 InfoColumn(

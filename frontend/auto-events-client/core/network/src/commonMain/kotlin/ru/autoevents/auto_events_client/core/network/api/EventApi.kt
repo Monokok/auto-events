@@ -3,7 +3,6 @@ package ru.autoevents.auto_events_client.core.network.api
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.http.*
 import ru.autoevents.auto_events_client.core.network.entity.EventDto
 import ru.autoevents.auto_events_client.core.network.entity.EventResponseDto
 import ru.autoevents.auto_events_client.core.network.entity.EventTypeResponseDto
@@ -11,7 +10,7 @@ import ru.autoevents.auto_events_client.core.network.entity.EventTypeResponseDto
 class EventApi(private val client: HttpClient) {
 
     suspend fun getEvents(cityId: Int?, typeId: Int?): EventResponseDto {
-        return client.get("/events"){
+        return client.get("/events") {
             url {
                 cityId?.let { parameter("city_id", it) }
                 typeId?.let { parameter("type_id", it) }
@@ -19,15 +18,11 @@ class EventApi(private val client: HttpClient) {
         }.body()
     }
 
-    suspend fun getEventsTypes(): List<EventTypeResponseDto>{
+    suspend fun getEventsTypes(): List<EventTypeResponseDto> {
         return client.get("/events/types").body()
     }
 
-    suspend fun getEvent(eventId: Int): EventDto{
-        return client.get("/events"){
-            url{
-                path("$eventId")
-            }
-        }.body()
+    suspend fun getEvent(eventId: Int): EventDto {
+        return client.get("/events/$eventId").body()
     }
 }
