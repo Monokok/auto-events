@@ -1,11 +1,11 @@
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 
 from pydantic import PostgresDsn, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class EnvEnum(str, Enum):
+class EnvEnum(StrEnum):
     dev = "dev"
     prod = "prod"
 
