@@ -1,6 +1,5 @@
 package ru.autoevents.auto_events_client.feature.home.ui.main
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import auto_events_client.core.ui.generated.resources.ic_heart_outlined
 import auto_events_client.feature.home.generated.resources.*
+import coil3.compose.AsyncImage
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
@@ -38,6 +38,7 @@ fun EventCard(
         modifier = Modifier
             .clip(MaterialTheme.shapes.cardRadius10)
             .clickable { onClick(event.id) }
+            .padding(8.dp)
             .width(IntrinsicSize.Min)
     ) {
         Box(
@@ -48,10 +49,11 @@ fun EventCard(
             ).padding(bottom = 5.dp).clip(MaterialTheme.shapes.cardRadius10)
                 .background(MaterialTheme.colorScheme.white900)
         ) {
-            Image(
-                painter = painterResource(Res.drawable.image_event_placeholder),
+            AsyncImage(
+                model = event.pictureUrl,
+                contentDescription = event.pictureUrl,
                 contentScale = ContentScale.Crop,
-                contentDescription = "event",
+                placeholder = painterResource(Res.drawable.image_event_placeholder),
                 modifier = Modifier.width(267.dp).height(184.dp)
             )
             event.startsAt?.let { date ->
@@ -87,6 +89,9 @@ fun EventCard(
                 text = event.description,
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.primary900,
+                maxLines = 3,
+                minLines = 3,
+                overflow = TextOverflow.Ellipsis,
             )
             Text(
                 text = stringResource(if (event.isFree) Res.string.free else Res.string.paid_for),
@@ -145,11 +150,12 @@ fun EventRow(
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Image(
-            painter = painterResource(Res.drawable.image_event_placeholder2),
+        AsyncImage(
+            model = event.pictureUrl,
+            contentDescription = event.pictureUrl,
             contentScale = ContentScale.Crop,
-            contentDescription = "event",
-            modifier = Modifier.size(78.dp)
+            placeholder = painterResource(Res.drawable.image_event_placeholder2),
+            modifier = Modifier.clip(MaterialTheme.shapes.cardRadius10).size(78.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(
@@ -196,6 +202,17 @@ private fun EventCardPreview() {
     }
 }
 
+@Composable
+@Preview
+private fun EventRowPreview() {
+    MaterialTheme {
+        EventRow(
+            event = previewEvent,
+            onClick = {},
+        )
+    }
+}
+
 
 val previewEvent = EventUi(
     id = 1,
@@ -210,5 +227,6 @@ val previewEvent = EventUi(
     isFree = false,
     ticketUrl = "https://example.com/tickets/1",
     registrationUrl = null,
+    pictureUrl = null,
     status = "published"
 )

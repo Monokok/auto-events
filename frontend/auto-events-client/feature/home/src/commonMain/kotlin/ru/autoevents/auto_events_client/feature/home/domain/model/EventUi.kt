@@ -17,5 +17,6 @@ data class EventUi(
     val isFree: Boolean,
     val ticketUrl: String?,
     val registrationUrl: String?,
+    val pictureUrl: String?,
     val status: String
 )

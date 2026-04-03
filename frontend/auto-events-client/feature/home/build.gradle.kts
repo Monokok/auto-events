@@ -46,6 +46,9 @@ kotlin {
             implementation(libs.voyager.screenmodel)
 
             implementation(libs.kotlinx.dateTime)
+
+            implementation(libs.coil3.network.ktor)
+            implementation(libs.coil3.compose)
         }
     }
 }

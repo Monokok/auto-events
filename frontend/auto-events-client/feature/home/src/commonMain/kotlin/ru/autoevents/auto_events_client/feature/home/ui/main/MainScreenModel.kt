@@ -146,6 +146,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -161,6 +162,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -176,6 +178,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -191,6 +194,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -206,6 +210,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
 )
