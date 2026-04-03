@@ -37,6 +37,8 @@ data class EventDto(
     val ticketUrl: String? = null,
     @SerialName("registration_url")
     val registrationUrl: String? = null,
+    @SerialName("picture_url")
+    val pictureUrl: String? = null,
     @SerialName("status")
     val status: String? = null
 )

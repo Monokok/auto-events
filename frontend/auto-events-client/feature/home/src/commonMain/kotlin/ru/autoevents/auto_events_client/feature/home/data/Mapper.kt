@@ -23,7 +23,8 @@ fun EventDto.mapToUi(): EventUi = EventUi(
     isFree = isFree ?: false,
     ticketUrl = ticketUrl,
     registrationUrl = registrationUrl,
-    status = status.orEmpty()
+    status = status.orEmpty(),
+    pictureUrl = pictureUrl
 )
 
 fun EventResponseDto.mapToUi(): List<EventUi> =

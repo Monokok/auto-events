@@ -46,8 +46,7 @@ internal fun MainContent(
             }
             item {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp),
                 ) {
                     items(state.events) { event ->
                         EventCard(event = event, onClick = navigateToEventInfo)
@@ -107,6 +106,23 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        status = "published",
+        pictureUrl = null,
+    ),
+    EventUi(
+        id = 1,
+        title = "Drift Showdown",
+        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
+        eventType = "drift",
+        region = "Московская область",
+        city = "Москва",
+        venue = "Автодром Moscow Raceway",
+        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
+        isFree = false,
+        ticketUrl = "https://example.com/tickets/1",
+        registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -122,21 +138,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
-        status = "published"
-    ),
-    EventUi(
-        id = 1,
-        title = "Drift Showdown",
-        description = "Грандиозное дрифт-шоу с участием лучших пилотов",
-        eventType = "drift",
-        region = "Московская область",
-        city = "Москва",
-        venue = "Автодром Moscow Raceway",
-        startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
-        endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
-        isFree = false,
-        ticketUrl = "https://example.com/tickets/1",
-        registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -152,6 +154,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -167,6 +170,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
 )

@@ -60,8 +60,7 @@ internal fun MainContent(
             }
             item {
                 LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp),
                 ) {
                     items(state.events) { event ->
                         EventCard(event = event, onClick = navigateToEventInfo)
@@ -127,6 +126,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -142,6 +142,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -157,6 +158,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -172,6 +174,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
     EventUi(
@@ -187,6 +190,7 @@ private val mockedList = listOf(
         isFree = false,
         ticketUrl = "https://example.com/tickets/1",
         registrationUrl = null,
+        pictureUrl = null,
         status = "published"
     ),
 )

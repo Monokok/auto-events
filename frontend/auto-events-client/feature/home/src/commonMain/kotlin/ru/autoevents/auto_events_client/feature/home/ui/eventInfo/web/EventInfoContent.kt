@@ -1,6 +1,5 @@
 package ru.autoevents.auto_events_client.feature.home.ui.eventInfo.web
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -11,10 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import auto_events_client.feature.home.generated.resources.Res
+import auto_events_client.feature.home.generated.resources.image_event_placeholder
 import cafe.adriel.voyager.navigator.LocalNavigator
+import coil3.compose.AsyncImage
+import org.jetbrains.compose.resources.painterResource
 import ru.autoevents.auto_events_client.core.ui.components.Header
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.Screen
@@ -55,23 +59,13 @@ private fun EventBodyContent(
         modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // Картинка с авто
-        Box(
+        AsyncImage(
+            model = event.pictureUrl,
+            placeholder = painterResource(Res.drawable.image_event_placeholder),
+            contentDescription = event.pictureUrl,
+            contentScale = ContentScale.Crop,
             modifier = Modifier.size(320.dp).clip(RoundedCornerShape(12.dp))
-                .background(MaterialTheme.colorScheme.primaryContainer)
-        ) {
-
-            // Image(painter = painterResource(id = R.drawable.car), contentDescription = null)
-
-            // Заглушка для картинки
-//            Icon(
-//                imageVector = Icons.Default.DirectionsCar,
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .size(48.dp)
-//                    .align(Alignment.Center),
-//                tint = MaterialTheme.colorScheme.primary
-//            )
-        }
+        )
 
         // Столбец с информацией
         Column(
@@ -136,7 +130,7 @@ private fun EventBodyContent(
                 )
 
                 // Дата
-                event.startsAt?.let {date ->
+                event.startsAt?.let { date ->
                     InfoColumn(
 //                    icon = Icons.Default.Event,
                         label = "Дата",
