@@ -1,10 +1,9 @@
-package ru.autoevents.auto_events_client.feature.home.ui.main.web
+package ru.autoevents.auto_events_client.feature.home.ui.main.mobile
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,9 +13,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import auto_events_client.core.ui.generated.resources.Res
 import auto_events_client.core.ui.generated.resources.current_location
-import auto_events_client.core.ui.generated.resources.ic_close
+import auto_events_client.core.ui.generated.resources.ic_chevron_down
+import auto_events_client.core.ui.generated.resources.ic_close_outlined
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import ru.autoevents.auto_events_client.core.ui.theme.dark700
+import ru.autoevents.auto_events_client.core.ui.theme.dark900
+import ru.autoevents.auto_events_client.core.ui.theme.inter14Bold
+import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
 import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
 
 
@@ -29,7 +33,7 @@ import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
  * @param resetLocation колбэк для сброса выбранного города
  */
 @Composable
-fun WebButtonLocation(
+fun MobileButtonLocation(
     cities: List<CityUi>,
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
@@ -41,7 +45,7 @@ fun WebButtonLocation(
     var showCityDropdownMenu by remember { mutableStateOf(isExpanded) }
 
     var selectedCity by remember {
-        mutableStateOf<CityUi?>(
+        mutableStateOf(
             if (defaultSelectedCity != null) CityUi("Наименование города", 0)
             else null
         )
@@ -53,85 +57,73 @@ fun WebButtonLocation(
         selectedCity = null //прекращаем рисовать имя города
     }
 
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier.height(IntrinsicSize.Min),
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Bottom,
-            modifier = Modifier
-                .width(210.dp)
-                .clip(RoundedCornerShape(50.dp))
+    Box{
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .clip(CircleShape)
                 .clickable { showCityDropdownMenu = !isExpanded }
-                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
-                .padding(horizontal = 25.dp, vertical = 16.dp)
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+            ,
         ) {
-            // Строка "Текущая локация"
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-//                    .padding(start = 20.dp)
-                verticalAlignment = Alignment.CenterVertically,
+            Column(
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End,
             ) {
                 Text(
                     text = stringResource(Res.string.current_location),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.inter14Normal,
+                    color = MaterialTheme.colorScheme.dark700,
                 )
-//                IconButton(
-//                    onClick = { showCityDropdownMenu = true }, modifier = Modifier.size(24.dp)
-//                ) {
-//                    Icon(
-//                        painter = painterResource(Res.drawable.ic_chevron_down),
-//                        contentDescription = "Выбрать локацию",
-//                        tint = MaterialTheme.colorScheme.onPrimary,
-//                        modifier = Modifier.size(20.dp)
-//                    )
-//                }
-
-                // Правая иконка (крестик)
-                Box {
-                    DropdownMenu(
-                        expanded = showCityDropdownMenu, onDismissRequest = { showCityDropdownMenu = false }) {
-                        cities.forEach { cityElement ->
-                            DropdownMenuItem(text = {
-                                Text(
-                                    cityElement.name,
-                                    style = MaterialTheme.typography.labelSmall,
-//                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }, onClick = {
-                                // Здесь можно добавить обработку выбора города
-                                setLocation(cityElement)
-                                showCityDropdownMenu = false
-                                selectedCity = cityElement
-                            })
-                        }
-                    }
-
-
+                selectedCity?.let {
+                    Text(
+                        text = it.name,
+                        style = MaterialTheme.typography.inter14Bold,
+                        color = MaterialTheme.colorScheme.dark900,
+                    )
                 }
             }
-            selectedCity?.let {
-                Text(
-                    text = it.name,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onPrimary,
+            Icon(
+                painter = painterResource(Res.drawable.ic_chevron_down),
+                contentDescription = "Открыть",
+                tint = MaterialTheme.colorScheme.dark700,
+                modifier = Modifier.size(24.dp),
+            )
+            AnimatedVisibility(visible = selectedCity != null) {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_close_outlined),
+                    contentDescription = "Сбросить",
+                    tint = MaterialTheme.colorScheme.dark700,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            showCityDropdownMenu = false
+                            handleResetLocation()
+                        }
+                        .size(24.dp),
                 )
             }
         }
-        AnimatedVisibility(selectedCity != null, modifier = Modifier.fillMaxHeight()) {
-            IconButton(
-                onClick = {
-                    showCityDropdownMenu = false
-                    handleResetLocation()
-                },
-                modifier = Modifier.fillMaxHeight().aspectRatio(1f),
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.ic_close),
-                    contentDescription = "Закрыть",
-                    tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.padding(10.dp).fillMaxHeight().aspectRatio(1f),
+        DropdownMenu(
+            expanded = showCityDropdownMenu,
+            onDismissRequest = { showCityDropdownMenu = false }
+        ) {
+            cities.forEach { cityElement ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            cityElement.name,
+                            style = MaterialTheme.typography.labelSmall,
+//                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    },
+                    onClick = {
+                        // Здесь можно добавить обработку выбора города
+                        setLocation(cityElement)
+                        showCityDropdownMenu = false
+                        selectedCity = cityElement
+                    }
                 )
             }
         }
@@ -142,7 +134,7 @@ fun WebButtonLocation(
 @Composable
 private fun ButtonLocationPreviewExpanded() {
     Row {
-        WebButtonLocation(
+        MobileButtonLocation(
             isExpanded = true, cities = listOf(
                 CityUi("Москва", 0),
                 CityUi("Иваново", 1),
@@ -161,7 +153,7 @@ private fun ButtonLocationPreviewExpanded() {
 @Composable
 private fun ButtonLocationPreview() {
     Row {
-        WebButtonLocation(
+        MobileButtonLocation(
             isExpanded = false,
             cities = listOf(
                 CityUi("Москва", 0),
@@ -181,7 +173,7 @@ private fun ButtonLocationPreview() {
 @Composable
 private fun ButtonLocationCityIsSelected() {
     Row {
-        WebButtonLocation(
+        MobileButtonLocation(
             isExpanded = false, defaultSelectedCity = CityUi("Наименование города", 0),
             cities = listOf(
                 CityUi("Москва", 0),

@@ -5,7 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import org.koin.compose.koinInject
+import ru.autoevents.auto_events_client.core.ui.components.Header
+import ru.autoevents.auto_events_client.core.ui.components.Screen
 
 /**
  * Экран главной страницы приложения.
@@ -42,15 +45,26 @@ private fun EventInfoScreen(
     screenModel: EventInfoScreenModel,
 ) {
     val state by screenModel.state.collectAsState()
+    val navigator = LocalNavigator.current
 
     LaunchedEffect(eventId) {
         screenModel.pushAction(Action.GetEventInfo(eventId))
     }
 
-    EventInfoScreenContent(
-        state = state,
-        onAction = screenModel::pushAction
-    )
+    Screen(
+        topBar = {
+            Header(
+                navigateBack = {
+                    navigator?.pop()
+                }
+            )
+        }
+    ) {
+        EventInfoScreenContent(
+            state = state,
+            onAction = screenModel::pushAction
+        )
+    }
 }
 
 /**

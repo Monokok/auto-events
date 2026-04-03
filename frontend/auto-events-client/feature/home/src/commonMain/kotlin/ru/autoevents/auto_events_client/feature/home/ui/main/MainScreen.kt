@@ -6,6 +6,8 @@ import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import org.koin.compose.koinInject
+import ru.autoevents.auto_events_client.core.ui.components.Header
+import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.EventInfoScreen
 
 /**
@@ -43,13 +45,34 @@ private fun MainScreen(
     val state by screenModel.state.collectAsState()
     val navigator = LocalNavigator.current
 
-    MainScreenContent(
-        state = state,
-        onAction = screenModel::pushAction,
-        navigateToEventInfo = {
-            navigator?.push(EventInfoScreen(it))
+    Screen(
+        topBar = {
+            Header(locationContent = {
+                ButtonLocation(
+                    cities = state.cities,
+                    setLocation = { city ->
+                        screenModel.pushAction(
+                            Action.ChangeFilter(
+                                cityId = city.id,
+                                typeId = state.selectedEventTypeId
+                            )
+                        )
+                    },
+                    resetLocation = {
+                        screenModel.pushAction(Action.ChangeFilter(cityId = null, typeId = state.selectedEventTypeId))
+                    }
+                )
+            })
         }
-    )
+    ) {
+        MainScreenContent(
+            state = state,
+            onAction = screenModel::pushAction,
+            navigateToEventInfo = {
+                navigator?.push(EventInfoScreen(it))
+            }
+        )
+    }
 }
 
 /**
