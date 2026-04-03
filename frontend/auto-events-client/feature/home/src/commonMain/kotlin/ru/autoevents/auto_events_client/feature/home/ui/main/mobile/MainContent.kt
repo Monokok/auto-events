@@ -19,7 +19,6 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.MobilePreview
-import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.main.*
 import kotlin.time.Instant
@@ -30,52 +29,53 @@ internal fun MainContent(
     onAction: (Action) -> Unit,
     navigateToEventInfo: (Int) -> Unit,
 ) {
-    Screen(
-        topBar = {},
-        bottomBar = {}
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(vertical = 16.dp),
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 16.dp),
-        ) {
-            item {
-                ChapterRow(
-                    chapterName = stringResource(Res.string.nearest_events),
-                    allText = stringResource(Res.string.all_events),
-                )
-            }
-            item {
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 8.dp),
-                ) {
-                    items(state.events) { event ->
-                        EventCard(event = event, onClick = navigateToEventInfo)
-                    }
+        item {
+            ChapterRow(
+                chapterName = stringResource(Res.string.nearest_events),
+                allText = stringResource(Res.string.all_events),
+            )
+        }
+        item {
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 8.dp),
+            ) {
+                items(state.events) { event ->
+                    EventCard(event = event, onClick = navigateToEventInfo)
                 }
             }
-            item {
-                EventTypesBar(
-                    eventTypes = getEventTypesMock(),
-                    onEventTypeClick = {},
-                    clearEventTypes = { }
-                )
-            }
-            item {
-                ChapterRow(
-                    chapterName = stringResource(Res.string.popular_events),
-                    allText = stringResource(Res.string.all_events),
-                )
-            }
-            items(state.events) {
-                EventRow(
-                    event = it,
-                    onClick = navigateToEventInfo,
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                )
-            }
         }
-        LoaderFullScreen(state.loading)
+        item {
+            EventTypesBar(
+                eventTypes = state.eventTypes,
+                onEventTypeClick = { type ->
+                    onAction(
+                        Action.ChangeFilter(cityId = state.selectedCityId, typeId = type.id)
+                    )
+                },
+                clearEventTypes = {
+                    onAction(Action.ChangeFilter(cityId = state.selectedCityId, typeId = null))
+                },
+            )
+        }
+        item {
+            ChapterRow(
+                chapterName = stringResource(Res.string.popular_events),
+                allText = stringResource(Res.string.all_events),
+            )
+        }
+        items(state.events) {
+            EventRow(
+                event = it,
+                onClick = navigateToEventInfo,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
     }
+    LoaderFullScreen(state.loading)
 }
 
 @Composable

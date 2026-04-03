@@ -25,6 +25,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.theme.*
+import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import kotlin.time.Instant
 import auto_events_client.core.ui.generated.resources.Res as CoreRes
@@ -84,6 +85,9 @@ fun EventCard(
                 text = event.title,
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.dark900,
+                maxLines = 2,
+                minLines = 2,
+                overflow = TextOverflow.Ellipsis,
             )
             Text(
                 text = event.description,
@@ -190,6 +194,16 @@ fun EventRow(
         )
     }
 }
+
+@Composable
+expect fun ButtonLocation(
+    cities: List<CityUi>,
+    modifier: Modifier = Modifier,
+    isExpanded: Boolean = false,
+    defaultSelectedCity: CityUi? = null,
+    setLocation: (CityUi) -> Unit = {},
+    resetLocation: () -> Unit = {},
+)
 
 @Composable
 @Preview

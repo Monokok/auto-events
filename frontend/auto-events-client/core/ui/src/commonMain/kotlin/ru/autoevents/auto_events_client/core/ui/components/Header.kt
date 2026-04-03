@@ -17,11 +17,13 @@ import auto_events_client.core.ui.generated.resources.ic_chevron_left
 import auto_events_client.core.ui.generated.resources.slogan
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import ru.autoevents.auto_events_client.core.ui.theme.dark900
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
+import ru.autoevents.auto_events_client.core.ui.theme.inter16Bold
 import ru.autoevents.auto_events_client.core.ui.theme.white900
 
 @Composable
-fun Header(
+internal fun WebHeader(
     locationContent: @Composable () -> Unit = {},
     navigateBack: (() -> Unit)? = null,
     //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
@@ -69,8 +71,51 @@ fun Header(
     }
 }
 
+@Composable
+internal fun MobileHeader(
+    locationContent: @Composable () -> Unit = {},
+    navigateBack: (() -> Unit)? = null,
+    //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
+) {
+    Row(
+        modifier = Modifier
+            .height(IntrinsicSize.Min)
+            .padding(horizontal = 8.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        navigateBack?.let { action ->
+            IconButton(
+                onClick = action,
+                colors = IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.dark900,
+                    containerColor = MaterialTheme.colorScheme.white900
+                ),
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_chevron_left),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = stringResource(Res.string.auto_events),
+            style = MaterialTheme.typography.inter16Bold,
+            color = MaterialTheme.colorScheme.dark900,
+            maxLines = 2,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        locationContent()
+    }
+}
+
+@Composable
+expect fun Header(locationContent: @Composable () -> Unit = {}, navigateBack: (() -> Unit)? = null)
+
 @Preview(widthDp = 1200)
+
 @Composable
 fun HeaderPreview() {
-    Header()
+    WebHeader()
 }

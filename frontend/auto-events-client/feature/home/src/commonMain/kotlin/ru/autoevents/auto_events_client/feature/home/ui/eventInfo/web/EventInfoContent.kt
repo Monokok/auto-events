@@ -16,12 +16,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import auto_events_client.feature.home.generated.resources.Res
 import auto_events_client.feature.home.generated.resources.image_event_placeholder
-import cafe.adriel.voyager.navigator.LocalNavigator
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.painterResource
-import ru.autoevents.auto_events_client.core.ui.components.Header
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
-import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.State
@@ -29,16 +26,7 @@ import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.State
 
 @Composable
 internal fun EventInfoContent(state: State) {
-    val navigator = LocalNavigator.current
-    Screen(
-        topBar = {
-            Header(
-                navigateBack = { navigator?.pop() }
-            )
-        }
-    ) {
-        EventBody(state)
-    }
+    EventBody(state)
 }
 
 
