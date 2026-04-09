@@ -30,11 +30,15 @@ class EventService:
 
         return [EventTypeDTO.model_validate(et) for et in event_types]
 
-    async def get_event_by_id(self, event_id: int) -> EventShortDTO | None:
+    async def get_event_by_id(
+        self, event_id: int, update_views_count: bool = True
+    ) -> EventShortDTO | None:
         async with self.uow:
             event = await self.uow.events.get_by_id(event_id)
-
-        if event is None:
-            return None
+            if event is None:
+                return None
+            if update_views_count:
+                event = await self.uow.events.increment_views_count(event.id)
+                await self.uow.commit()
 
         return EventShortDTO.model_validate(event)
