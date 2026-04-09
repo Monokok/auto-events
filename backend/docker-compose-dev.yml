@@ -11,6 +11,8 @@ services:
       - ${APP_PORT}:8000
     env_file:
       - .env
+    volumes:
+      - static_vol:/app/static
     
   postgres:
     image: postgres:16
@@ -51,3 +53,4 @@ networks:
 volumes:
   postgres_vol:
   pgadmin_vol:
+  static_vol:
