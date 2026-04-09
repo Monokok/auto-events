@@ -9,6 +9,7 @@ from auth.auth_router import auth_router
 from config import EnvEnum, settings
 from database.database import DatabasePgs
 from event.event_router import event_router
+from file.file_router import file_router
 from user.users_router import user_router
 from utils.di import di_container
 from utils.logging import LOGGING_CONFIG
@@ -47,6 +48,7 @@ app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(event_router)
 app.include_router(venue_router)
+app.include_router(file_router)
 
 # Настройка DI
 setup_dishka(di_container, app)
