@@ -4,6 +4,7 @@ import uvicorn
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from auth.auth_router import auth_router
 from config import EnvEnum, settings
@@ -49,6 +50,13 @@ app.include_router(user_router)
 app.include_router(event_router)
 app.include_router(venue_router)
 app.include_router(file_router)
+
+# Подключаем директорию со статикой
+app.mount(
+    "/static",
+    StaticFiles(directory=settings.STATIC_DIR_PATH),
+    name="static",
+)
 
 # Настройка DI
 setup_dishka(di_container, app)

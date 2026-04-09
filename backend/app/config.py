@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     @property
     def APP_BASE_URI(self) -> str:
         proto = "https" if self.SSL_ENABLE else "http"
-        return f"{proto}://{self.DOMAIN}"
+        return f"{proto}://{self.DOMAIN}/api"
 
     @computed_field
     @property
