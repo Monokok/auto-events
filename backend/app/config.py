@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     SSL_CERT_FILE: str = "certfile.pem"
     SSL_KEY_FILE: str = "keyfile.pem"
     DOMAIN: str = "localhost"
+    MAX_UPLOAD_FILE_SIZE: int = 5242880
 
     # Database
     DB_USER: str = "autoevents"
@@ -48,6 +49,10 @@ class Settings(BaseSettings):
     @computed_field
     def STATIC_URI(self) -> str:
         return f"{self.APP_BASE_URI}/static"
+
+    @computed_field
+    def STATIC_DIR_PATH(self) -> Path:
+        return Path(__file__).parent / "static"
 
     @computed_field
     def POSTGRES_DB_URI(self) -> PostgresDsn:
