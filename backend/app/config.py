@@ -29,6 +29,8 @@ class Settings(BaseSettings):
     SSL_ENABLE: bool = False
     SSL_CERT_FILE: str = "certfile.pem"
     SSL_KEY_FILE: str = "keyfile.pem"
+    DOMAIN: str = "localhost"
+    MAX_UPLOAD_FILE_SIZE: int = 5242880
 
     # Database
     DB_USER: str = "autoevents"
@@ -40,6 +42,25 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str = "password_hash"
 
     @computed_field
+    @property
+    def APP_BASE_URI(self) -> str:
+        proto = "https" if self.SSL_ENABLE else "http"
+        return f"{proto}://{self.DOMAIN}/api"
+
+    @computed_field
+    @property
+    def STATIC_URI(self) -> str:
+        return f"{self.APP_BASE_URI}/static"
+
+    @computed_field
+    @property
+    def STATIC_DIR_PATH(self) -> Path:
+        static_path = Path(__file__).parent / "static"
+        static_path.mkdir(exist_ok=True)
+        return static_path
+
+    @computed_field
+    @property
     def POSTGRES_DB_URI(self) -> PostgresDsn:
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
@@ -51,6 +72,7 @@ class Settings(BaseSettings):
         )
 
     @computed_field
+    @property
     def POSTGRES_DB_HOST_URI(self) -> PostgresDsn:
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
