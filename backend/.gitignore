@@ -17,3 +17,6 @@ wheels/
 
 # Certificates
 *.pem
+
+# Static Files
+static/
