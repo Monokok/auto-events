@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import UTC, datetime
 from typing import cast
 
-from sqlalchemy import Select, and_, select
+from sqlalchemy import Select, and_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import contains_eager, joinedload
 
@@ -22,6 +22,9 @@ class IEventRepository(ABC):
 
     @abstractmethod
     async def get_by_id(self, event_id: int) -> Event | None: ...
+
+    @abstractmethod
+    async def increment_views_count(self, event_id: int) -> Event: ...
 
 
 class EventRepository(IEventRepository):
@@ -63,3 +66,12 @@ class EventRepository(IEventRepository):
         )
         result = await self.session.scalar(query)
         return result
+
+    async def increment_views_count(self, event_id: int) -> Event:
+        query = (
+            update(Event)
+            .where(Event.id == event_id)
+            .values(views_count=Event.views_count + 1)
+            .returning(Event)
+        )
+        return (await self.session.execute(query)).scalar_one()
