@@ -13,6 +13,9 @@ services:
       - .env
     volumes:
       - static_vol:/app/static
+    post_start: 
+      - command: chown -R nonroot:nonroot /app/static
+        user: root
     
   postgres:
     image: postgres:16
