@@ -27,6 +27,8 @@ data class EventDto(
     val city: String? = null,
     @SerialName("venue")
     val venue: String? = null,
+    @SerialName("views_count")
+    val viewsCount: Int? = null,
     @SerialName("starts_at")
     val startsAt: String? = null,   // строка в формате ISO 8601
     @SerialName("ends_at")
@@ -45,6 +47,4 @@ data class EventDto(
     val participantPrice: Int? = null,
     @SerialName("viewer_price")
     val viewerPrice: Int? = null,
-    @SerialName("views_count")
-    val viewsCount: Int? = null,
 )

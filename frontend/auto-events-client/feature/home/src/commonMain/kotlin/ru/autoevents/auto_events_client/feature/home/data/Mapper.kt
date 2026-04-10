@@ -8,6 +8,7 @@ import ru.autoevents.auto_events_client.core.network.entity.EventTypeResponseDto
 import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventTypeUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
+import kotlin.coroutines.EmptyCoroutineContext.get
 import kotlin.jvm.JvmName
 
 fun EventDto.mapToUi(): EventUi = EventUi(
@@ -29,6 +30,37 @@ fun EventDto.mapToUi(): EventUi = EventUi(
     participantPrice = participantPrice ?: 0,
     viewsCount = viewsCount ?: 0,
 )
+
+fun EventUi.getViewsCountString(): String {
+    return if (viewsCount == null) "0"
+    else formatViews(viewsCount)
+}
+
+fun formatViews(count: Int): String {
+    return when {
+        count < 1000 -> count.toString()
+
+        count < 10_000 -> {
+            val value = count / 1000
+            val decimal = (count % 1000) / 100  // одна цифра после запятой
+
+            if (decimal == 0) "${value}K"
+            else "${value}.${decimal}K"
+        }
+
+        count < 1_000_000 -> {
+            "${count / 1000}K"
+        }
+
+        else -> {
+            val value = count / 1_000_000
+            val decimal = (count % 1_000_000) / 100_000
+
+            if (decimal == 0) "${value}M"
+            else "${value}.${decimal}M"
+        }
+    }
+}
 
 fun EventResponseDto.mapToUi(): List<EventUi> =
     items?.map { it.mapToUi() } ?: emptyList()
