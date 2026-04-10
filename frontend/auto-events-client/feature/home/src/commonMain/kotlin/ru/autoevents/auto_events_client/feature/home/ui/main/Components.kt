@@ -210,7 +210,7 @@ fun EventRow(
                 modifier = Modifier.clip(CircleShape)
 //                    .clickable {}
 //                    .padding(12.dp)
-                    .size(24.dp)
+                    .size(12.dp)
             )
         }
     }
