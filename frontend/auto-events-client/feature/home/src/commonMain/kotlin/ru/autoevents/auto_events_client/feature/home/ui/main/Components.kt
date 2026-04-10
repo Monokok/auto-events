@@ -143,6 +143,7 @@ fun EventRow(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
         modifier = modifier
             .shadow(
                 elevation = 4.dp,
@@ -162,23 +163,26 @@ fun EventRow(
             placeholder = painterResource(Res.drawable.image_event_placeholder2),
             modifier = Modifier.clip(MaterialTheme.shapes.cardRadius10).size(78.dp)
         )
-        Spacer(modifier = Modifier.width(16.dp))
+//        Spacer(modifier = Modifier.width(16.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(2.dp),
+            modifier = Modifier.weight(1f) //занимать доступное пространство внутри родителя, деля его пропорционально с другими
 
         ) {
             Text(
-                text = event.title,
+                text = event.title, //Drift мега супер шоу экстра
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.dark900,
             )
+            //платность
             Text(
                 text = stringResource(if (event.isFree) Res.string.free else Res.string.paid_for),
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.primary900,
             )
+            //место
             Text(
                 text = event.venue,
                 style = MaterialTheme.typography.inter14Normal,
@@ -187,9 +191,9 @@ fun EventRow(
                 maxLines = 2,
             )
         }
-        Spacer(modifier = Modifier.weight(1f).defaultMinSize(4.dp))
+//        Spacer(modifier = Modifier.weight(1f).defaultMinSize(4.dp))
         Row(
-            modifier = Modifier.padding(12.dp),
+//            modifier = Modifier.padding(12.dp),
             horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ){
@@ -247,12 +251,12 @@ private fun EventRowPreview() {
 
 val previewEvent = EventUi(
     id = 1,
-    title = "Drift Showdown",
+    title = "Drift Showdown Super HardDriving Extra Plus Extreme",
     description = "Грандиозное дрифт-шоу с участием лучших пилотов",
     eventType = "drift",
     region = "Московская область",
     city = "Москва",
-    venue = "Автодром Moscow Raceway",
+    venue = "Автодром Extra Plus Pro Mega Moscow Raceway",
     startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
     endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
     isFree = false,
