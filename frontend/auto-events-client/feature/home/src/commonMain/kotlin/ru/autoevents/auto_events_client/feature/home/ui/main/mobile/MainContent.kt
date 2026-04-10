@@ -108,7 +108,9 @@ private val mockedList = listOf(
         registrationUrl = null,
         status = "published",
         pictureUrl = null,
-        viewsCount = 2550
+        participantPrice = 100,
+        viewerPrice = 100,
+        viewsCount = 12300,
     ),
     EventUi(
         id = 1,
@@ -125,7 +127,9 @@ private val mockedList = listOf(
         registrationUrl = null,
         pictureUrl = null,
         status = "published",
-        viewsCount = 8550
+        participantPrice = 100,
+        viewerPrice = 100,
+        viewsCount = 12300,
     ),
     EventUi(
         id = 1,
@@ -142,7 +146,9 @@ private val mockedList = listOf(
         registrationUrl = null,
         pictureUrl = null,
         status = "published",
-        viewsCount = 2570
+        participantPrice = 100,
+        viewerPrice = 100,
+        viewsCount = 12300,
     ),
     EventUi(
         id = 1,
@@ -159,7 +165,9 @@ private val mockedList = listOf(
         registrationUrl = null,
         pictureUrl = null,
         status = "published",
-        viewsCount = 1580
+        participantPrice = 100,
+        viewerPrice = 100,
+        viewsCount = 12300,
     ),
     EventUi(
         id = 1,
@@ -176,6 +184,8 @@ private val mockedList = listOf(
         registrationUrl = null,
         pictureUrl = null,
         status = "published",
-        viewsCount = 150
+        participantPrice = 100,
+        viewerPrice = 100,
+        viewsCount = 12300,
     ),
 )

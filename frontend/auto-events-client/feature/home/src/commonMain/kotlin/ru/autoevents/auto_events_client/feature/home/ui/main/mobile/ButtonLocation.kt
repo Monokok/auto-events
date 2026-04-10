@@ -12,9 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import auto_events_client.core.ui.generated.resources.Res
+import auto_events_client.core.ui.generated.resources.all
 import auto_events_client.core.ui.generated.resources.current_location
 import auto_events_client.core.ui.generated.resources.ic_chevron_down
-import auto_events_client.core.ui.generated.resources.ic_close_outlined
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.theme.dark700
@@ -22,7 +22,6 @@ import ru.autoevents.auto_events_client.core.ui.theme.dark900
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Bold
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
 import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
-
 
 /**
  * Компонент кнопки, которая задает локацию через выпадающий список из городов
@@ -57,25 +56,26 @@ fun MobileButtonLocation(
         selectedCity = null //прекращаем рисовать имя города
     }
 
-    Box{
+    Box {
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .clip(CircleShape)
                 .clickable { showCityDropdownMenu = !isExpanded }
-                .padding(horizontal = 12.dp, vertical = 8.dp)
-            ,
+                .padding(horizontal = 12.dp, vertical = 8.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End,
             ) {
-                Text(
-                    text = stringResource(Res.string.current_location),
-                    style = MaterialTheme.typography.inter14Normal,
-                    color = MaterialTheme.colorScheme.dark700,
-                )
+                AnimatedVisibility(selectedCity == null) {
+                    Text(
+                        text = stringResource(Res.string.current_location),
+                        style = MaterialTheme.typography.inter14Normal,
+                        color = MaterialTheme.colorScheme.dark700,
+                    )
+                }
                 selectedCity?.let {
                     Text(
                         text = it.name,
@@ -90,25 +90,38 @@ fun MobileButtonLocation(
                 tint = MaterialTheme.colorScheme.dark700,
                 modifier = Modifier.size(24.dp),
             )
-            AnimatedVisibility(visible = selectedCity != null) {
-                Icon(
-                    painter = painterResource(Res.drawable.ic_close_outlined),
-                    contentDescription = "Сбросить",
-                    tint = MaterialTheme.colorScheme.dark700,
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .clickable {
-                            showCityDropdownMenu = false
-                            handleResetLocation()
-                        }
-                        .size(24.dp),
-                )
-            }
+//            AnimatedVisibility(visible = selectedCity != null) {
+//                Icon(
+//                    painter = painterResource(Res.drawable.ic_close_outlined),
+//                    contentDescription = "Сбросить",
+//                    tint = MaterialTheme.colorScheme.dark700,
+//                    modifier = Modifier
+//                        .clip(CircleShape)
+//                        .clickable {
+//                            showCityDropdownMenu = false
+//                            handleResetLocation()
+//                        }
+//                        .size(24.dp),
+//                )
+//            }
         }
         DropdownMenu(
             expanded = showCityDropdownMenu,
             onDismissRequest = { showCityDropdownMenu = false }
         ) {
+            DropdownMenuItem(
+                text = {
+                    Text(
+                        stringResource(Res.string.all),
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                },
+                onClick = {
+                    showCityDropdownMenu = false
+                    handleResetLocation()
+
+                }
+            )
             cities.forEach { cityElement ->
                 DropdownMenuItem(
                     text = {

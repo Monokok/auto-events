@@ -1,5 +1,6 @@
 package ru.autoevents.auto_events_client.core.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,5 +30,7 @@ actual fun Screen(
         containerColor = MaterialTheme.colorScheme.white950,
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.white950)
+            .statusBarsPadding()
     )
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import auto_events_client.core.ui.generated.resources.*
 import org.jetbrains.compose.resources.Font
@@ -27,6 +28,14 @@ val Typography.inter48ExtraBold
         fontSize = 48.sp,
     )
 
+val Typography.inter20Bold
+    @Composable
+    get() = TextStyle(
+        fontFamily = InterFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+    )
+
 val Typography.inter16Bold
     @Composable
     get() = TextStyle(
@@ -43,12 +52,29 @@ val Typography.inter14Normal
         fontSize = 14.sp,
     )
 
+val Typography.inter14Link
+    @Composable
+    get() = TextStyle(
+        fontFamily = InterFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        textDecoration = TextDecoration.Underline,
+    )
+
 val Typography.inter14Bold
     @Composable
     get() = TextStyle(
         fontFamily = InterFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
+    )
+
+val Typography.inter12Normal
+    @Composable
+    get() = TextStyle(
+        fontFamily = InterFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
     )
 
 val Typography.inter10Normal

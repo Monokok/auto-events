@@ -26,7 +26,9 @@ fun EventDto.mapToUi(): EventUi = EventUi(
     registrationUrl = registrationUrl,
     status = status.orEmpty(),
     pictureUrl = pictureUrl,
-    viewsCount = viewsCount,
+    viewerPrice = viewerPrice ?: 0,
+    participantPrice = participantPrice ?: 0,
+    viewsCount = viewsCount ?: 0,
 )
 
 fun EventUi.getViewsCountString(): String {

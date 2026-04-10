@@ -18,6 +18,8 @@ data class EventUi(
     val ticketUrl: String?,
     val registrationUrl: String?,
     val pictureUrl: String?,
-    val viewsCount: Int?,
-    val status: String
+    val status: String,
+    val participantPrice: Int,
+    val viewerPrice: Int,
+    val viewsCount: Int,
 )

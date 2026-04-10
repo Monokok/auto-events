@@ -36,6 +36,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.voyager.screenmodel)
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core)
+
+            implementation(libs.coil3.compose)
+            implementation(libs.coil3.network.ktor)
         }
     }
 }
