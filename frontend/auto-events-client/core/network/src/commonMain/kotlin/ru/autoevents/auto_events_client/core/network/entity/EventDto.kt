@@ -40,5 +40,11 @@ data class EventDto(
     @SerialName("picture_url")
     val pictureUrl: String? = null,
     @SerialName("status")
-    val status: String? = null
+    val status: String? = null,
+    @SerialName("participant_price")
+    val participantPrice: Int? = null,
+    @SerialName("viewer_price")
+    val viewerPrice: Int? = null,
+    @SerialName("views_count")
+    val viewsCount: Int? = null,
 )

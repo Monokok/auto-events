@@ -20,6 +20,7 @@ import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.painterResource
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
+import ru.autoevents.auto_events_client.core.ui.models.LocalImageLoader
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.State
 
@@ -49,6 +50,7 @@ private fun EventBodyContent(
         // Картинка с авто
         AsyncImage(
             model = event.pictureUrl,
+            imageLoader = LocalImageLoader.current,
             placeholder = painterResource(Res.drawable.image_event_placeholder),
             contentDescription = event.pictureUrl,
             contentScale = ContentScale.Crop,

@@ -24,7 +24,10 @@ fun EventDto.mapToUi(): EventUi = EventUi(
     ticketUrl = ticketUrl,
     registrationUrl = registrationUrl,
     status = status.orEmpty(),
-    pictureUrl = pictureUrl
+    pictureUrl = pictureUrl,
+    viewerPrice = viewerPrice ?: 0,
+    participantPrice = participantPrice ?: 0,
+    viewsCount = viewsCount ?: 0,
 )
 
 fun EventResponseDto.mapToUi(): List<EventUi> =

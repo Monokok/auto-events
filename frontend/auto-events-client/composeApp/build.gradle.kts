@@ -46,6 +46,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.feature.home)
             implementation(projects.core.network)
+            implementation(projects.core.ui)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -60,6 +61,9 @@ kotlin {
             implementation(libs.koin.compose)
 
             implementation(libs.voyager.navigator)
+
+            implementation(libs.coil3.compose)
+            implementation(libs.coil3.network.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

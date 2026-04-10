@@ -24,6 +24,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import ru.autoevents.auto_events_client.core.ui.models.LocalImageLoader
 import ru.autoevents.auto_events_client.core.ui.theme.*
 import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
@@ -52,6 +53,7 @@ fun EventCard(
         ) {
             AsyncImage(
                 model = event.pictureUrl,
+                imageLoader = LocalImageLoader.current,
                 contentDescription = event.pictureUrl,
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(Res.drawable.image_event_placeholder),
@@ -156,6 +158,7 @@ fun EventRow(
     ) {
         AsyncImage(
             model = event.pictureUrl,
+            imageLoader = LocalImageLoader.current,
             contentDescription = event.pictureUrl,
             contentScale = ContentScale.Crop,
             placeholder = painterResource(Res.drawable.image_event_placeholder2),
@@ -242,5 +245,8 @@ val previewEvent = EventUi(
     ticketUrl = "https://example.com/tickets/1",
     registrationUrl = null,
     pictureUrl = null,
-    status = "published"
+    status = "published",
+    participantPrice = 100,
+    viewerPrice = 100,
+    viewsCount = 12300,
 )

@@ -6,4 +6,6 @@
     <string name="auto_events">Автомобильные события</string>
     <string name="slogan">Ярче, громче, быстрее, ближе, захватывающе!</string>
     <string name="current_location">Текущая локация</string>
+    <string name="rubles_template">%1$d ₽</string>
+    <string name="more_detailed">Подробнее</string>
 </resources>
