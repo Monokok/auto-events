@@ -104,7 +104,7 @@ fun EventCard(
                 color = MaterialTheme.colorScheme.primary900,
             )
             Text(
-                text = event.venue,
+                text = "${event.city}, ${event.venue}",
                 style = MaterialTheme.typography.inter14Normal,
                 color = MaterialTheme.colorScheme.dark700,
             )
@@ -184,7 +184,7 @@ fun EventRow(
             )
             //место
             Text(
-                text = event.venue,
+                text = "${event.city}, ${event.venue}",
                 style = MaterialTheme.typography.inter14Normal,
                 color = MaterialTheme.colorScheme.dark700,
                 overflow = TextOverflow.Ellipsis,
