@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import auto_events_client.core.ui.generated.resources.ic_heart_outlined
+import auto_events_client.core.ui.generated.resources.ic_eye
 import auto_events_client.feature.home.generated.resources.*
 import coil3.compose.AsyncImage
 import kotlinx.datetime.TimeZone
@@ -25,6 +25,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.theme.*
+import ru.autoevents.auto_events_client.feature.home.data.getViewsCountString
 import ru.autoevents.auto_events_client.feature.home.domain.model.CityUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import kotlin.time.Instant
@@ -142,6 +143,7 @@ fun EventRow(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
         modifier = modifier
             .shadow(
                 elevation = 4.dp,
@@ -161,22 +163,26 @@ fun EventRow(
             placeholder = painterResource(Res.drawable.image_event_placeholder2),
             modifier = Modifier.clip(MaterialTheme.shapes.cardRadius10).size(78.dp)
         )
-        Spacer(modifier = Modifier.width(16.dp))
+//        Spacer(modifier = Modifier.width(16.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(2.dp),
+            modifier = Modifier.weight(1f) //занимать доступное пространство внутри родителя, деля его пропорционально с другими
+
         ) {
             Text(
-                text = event.title,
+                text = event.title, //Drift мега супер шоу экстра
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.dark900,
             )
+            //платность
             Text(
                 text = stringResource(if (event.isFree) Res.string.free else Res.string.paid_for),
                 style = MaterialTheme.typography.inter14Bold,
                 color = MaterialTheme.colorScheme.primary900,
             )
+            //место
             Text(
                 text = event.venue,
                 style = MaterialTheme.typography.inter14Normal,
@@ -185,13 +191,28 @@ fun EventRow(
                 maxLines = 2,
             )
         }
-        Spacer(modifier = Modifier.weight(1f).defaultMinSize(4.dp))
-        Icon(
-            painter = painterResource(CoreRes.drawable.ic_heart_outlined),
-            contentDescription = "favourite",
-            tint = MaterialTheme.colorScheme.dark700,
-            modifier = Modifier.clip(CircleShape).clickable {}.padding(12.dp).size(24.dp)
-        )
+//        Spacer(modifier = Modifier.weight(1f).defaultMinSize(4.dp))
+        Row(
+//            modifier = Modifier.padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ){
+            Text(
+                event.getViewsCountString(),
+                style = MaterialTheme.typography.inter14Normal,
+                color = MaterialTheme.colorScheme.dark700,
+
+                )
+            Icon(
+                painter = painterResource(CoreRes.drawable.ic_eye),
+                contentDescription = "favourite",
+                tint = MaterialTheme.colorScheme.dark700,
+                modifier = Modifier.clip(CircleShape)
+//                    .clickable {}
+//                    .padding(12.dp)
+                    .size(24.dp)
+            )
+        }
     }
 }
 
@@ -230,17 +251,18 @@ private fun EventRowPreview() {
 
 val previewEvent = EventUi(
     id = 1,
-    title = "Drift Showdown",
+    title = "Drift Showdown Super HardDriving Extra Plus Extreme",
     description = "Грандиозное дрифт-шоу с участием лучших пилотов",
     eventType = "drift",
     region = "Московская область",
     city = "Москва",
-    venue = "Автодром Moscow Raceway",
+    venue = "Автодром Extra Plus Pro Mega Moscow Raceway",
     startsAt = Instant.parse("2026-03-12T18:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
     endsAt = Instant.parse("2026-03-12T22:00:00Z").toLocalDateTime(TimeZone.currentSystemDefault()),
     isFree = false,
     ticketUrl = "https://example.com/tickets/1",
     registrationUrl = null,
     pictureUrl = null,
-    status = "published"
+    status = "published",
+    viewsCount = 2555,
 )
