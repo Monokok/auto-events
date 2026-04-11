@@ -4,8 +4,9 @@ import androidx.compose.runtime.Composable
 
 @Composable
 actual fun Header(
-    locationContent: @Composable (() -> Unit),
+    locationContent: @Composable () -> Unit,
+    navigationContent: @Composable () -> Unit,
     navigateBack: (() -> Unit)?
 ) {
-    WebHeader(locationContent = locationContent, navigateBack = navigateBack)
+    WebHeader(locationContent = locationContent, navigationContent = navigationContent, navigateBack = navigateBack)
 }
