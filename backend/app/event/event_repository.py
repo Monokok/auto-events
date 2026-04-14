@@ -6,7 +6,7 @@ from sqlalchemy import Select, and_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import contains_eager, joinedload
 
-from event.event_filter import EventFilter
+from event.event_filter import EventFilter, EventTypeFilter
 from models import Event, EventStatusEnum, EventType, Venue
 from utils.pagination import Page, PaginationParams, paginate
 
@@ -18,7 +18,7 @@ class IEventRepository(ABC):
     ) -> Page[Event]: ...
 
     @abstractmethod
-    async def get_event_types(self) -> list[EventType]: ...
+    async def get_event_types(self, filter: EventTypeFilter) -> list[EventType]: ...
 
     @abstractmethod
     async def get_by_id(self, event_id: int) -> Event | None: ...
@@ -50,10 +50,17 @@ class EventRepository(IEventRepository):
 
         return await paginate(query, self.session, pagination_params)
 
-    async def get_event_types(self) -> list[EventType]:
-        query = select(EventType).order_by(EventType.name)
+    async def get_event_types(self, filter: EventTypeFilter) -> list[EventType]:
+        query = select(EventType)
+
+        if filter.city_id is not None:
+            query = query.join(EventType.events).join(Event.venue)
+
+        query = filter.filter(query)
+        query = filter.sort(query)
+
         result = await self.session.scalars(query)
-        return list(result.all())
+        return list(result.unique())
 
     async def get_by_id(self, event_id: int) -> Event | None:
         query = (

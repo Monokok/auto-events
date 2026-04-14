@@ -1,4 +1,4 @@
-from models import Event, Venue
+from models import Event, EventType, Venue
 from utils.base_filter import BaseFilter
 
 
@@ -17,4 +17,17 @@ class EventFilter(BaseFilter):
         overwrite_filter_fields = {
             "city_id": lambda value: Venue.city_id == value,
             "type_id": lambda value: Event.type_id == value,
+        }
+
+
+class EventTypeFilter(BaseFilter):
+    city_id: int | None = None
+
+    order_by: list[str] | None = None
+
+    class Constants(BaseFilter.Constants):
+        model = EventType
+        allow_sort_fields = {"name"}
+        overwrite_filter_fields = {
+            "city_id": lambda value: Venue.city_id == value,
         }
