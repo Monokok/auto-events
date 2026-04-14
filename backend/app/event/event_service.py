@@ -1,5 +1,5 @@
 from database.uow import IUnitOfWork
-from event.event_filter import EventFilter
+from event.event_filter import EventFilter, EventTypeFilter
 from event.event_schemas import EventShortDTO, EventTypeDTO
 from utils.pagination import Page, PaginationParams
 
@@ -24,9 +24,9 @@ class EventService:
         ]
         return Page(**events_page.dump_params(), items=events_schemas)
 
-    async def get_event_types(self) -> list[EventTypeDTO]:
+    async def get_event_types(self, filter: EventTypeFilter) -> list[EventTypeDTO]:
         async with self.uow:
-            event_types = await self.uow.events.get_event_types()
+            event_types = await self.uow.events.get_event_types(filter)
 
         return [EventTypeDTO.model_validate(et) for et in event_types]
 
