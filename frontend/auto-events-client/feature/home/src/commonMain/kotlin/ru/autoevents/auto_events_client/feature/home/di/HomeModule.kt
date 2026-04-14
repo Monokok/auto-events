@@ -4,11 +4,7 @@ import org.koin.dsl.module
 import ru.autoevents.auto_events_client.feature.home.data.AuthorizationRepository
 import ru.autoevents.auto_events_client.feature.home.data.EventRepository
 import ru.autoevents.auto_events_client.feature.home.data.UsersRepository
-import ru.autoevents.auto_events_client.feature.home.domain.useCases.AuthorizationUseCase
-import ru.autoevents.auto_events_client.feature.home.domain.useCases.GetCitiesUseCase
-import ru.autoevents.auto_events_client.feature.home.domain.useCases.GetEventInfoUseCase
-import ru.autoevents.auto_events_client.feature.home.domain.useCases.GetEventListUseCase
-import ru.autoevents.auto_events_client.feature.home.domain.useCases.GetEventTypesListUseCase
+import ru.autoevents.auto_events_client.feature.home.domain.useCases.*
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.EventInfoScreenModel
 import ru.autoevents.auto_events_client.feature.home.ui.main.MainScreenModel
 

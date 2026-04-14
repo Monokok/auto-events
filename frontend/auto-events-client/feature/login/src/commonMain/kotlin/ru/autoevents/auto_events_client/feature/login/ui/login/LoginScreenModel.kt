@@ -5,6 +5,7 @@ import ru.autoevents.auto_events_client.feature.login.domain.useCases.Authorizat
 
 class LoginScreenModel(
     private val authorizationUseCase: AuthorizationUseCase,
+    private val tokenStorage: TokenStorage,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State(),
 ) {

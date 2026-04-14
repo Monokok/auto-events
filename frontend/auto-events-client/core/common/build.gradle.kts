@@ -25,6 +25,10 @@ kotlin {
     }
 
     sourceSets{
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+            implementation(libs.androidx.security.crypto)
+        }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -38,6 +42,8 @@ kotlin {
             implementation(libs.voyager.screenmodel)
 
             implementation(libs.kotlinx.dateTime)
+
+            implementation(libs.koin.core)
         }
     }
 }

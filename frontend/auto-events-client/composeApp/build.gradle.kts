@@ -49,6 +49,7 @@ kotlin {
             implementation(projects.feature.login)
             implementation(projects.feature.register)
             implementation(projects.core.network)
+            implementation(projects.core.common)
             implementation(projects.core.ui)
 
             implementation(libs.compose.runtime)
