@@ -5,7 +5,7 @@ from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_filter.base.filter import FilterDepends
 
-from event.event_filter import EventFilter
+from event.event_filter import EventFilter, EventTypeFilter
 from event.event_schemas import EventShortDTO, EventTypeDTO
 from event.event_service import EventService
 from utils.pagination import Page, PaginationParams
@@ -28,9 +28,10 @@ async def get_actual_events(
     "/types", response_model=list[EventTypeDTO], summary="Get event types"
 )
 async def get_event_types(
+    filter: Annotated[EventTypeFilter, FilterDepends(EventTypeFilter)],
     event_service: FromDishka[EventService],
 ):
-    return await event_service.get_event_types()
+    return await event_service.get_event_types(filter)
 
 
 @event_router.get(
