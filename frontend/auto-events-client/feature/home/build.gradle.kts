@@ -49,6 +49,8 @@ kotlin {
 
             implementation(libs.coil3.network.ktor)
             implementation(libs.coil3.compose)
+
+            implementation(projects.feature.profile)
         }
     }
 }

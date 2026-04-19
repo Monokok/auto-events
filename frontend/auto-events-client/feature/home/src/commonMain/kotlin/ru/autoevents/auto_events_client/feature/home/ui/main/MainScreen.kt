@@ -14,7 +14,7 @@ import ru.autoevents.auto_events_client.core.ui.components.NavItem
 import ru.autoevents.auto_events_client.core.ui.components.NavigationContent
 import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.EventInfoScreen
-import ru.autoevents.auto_events_client.feature.home.ui.profile.ProfileScreen
+import ru.autoevents.auto_events_client.feature.profile.ui.profile.ProfileScreen
 
 /**
  * Экран главной страницы приложения.

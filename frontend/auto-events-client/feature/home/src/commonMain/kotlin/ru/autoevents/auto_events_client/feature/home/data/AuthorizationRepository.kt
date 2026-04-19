@@ -1,7 +1,6 @@
 package ru.autoevents.auto_events_client.feature.home.data
 
 import ru.autoevents.auto_events_client.core.network.api.AuthorizationApi
-import ru.autoevents.auto_events_client.feature.home.domain.model.AccessTokenDataUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.RegisterDataUi
 
 class AuthorizationRepository(private val authorizationApi: AuthorizationApi) {

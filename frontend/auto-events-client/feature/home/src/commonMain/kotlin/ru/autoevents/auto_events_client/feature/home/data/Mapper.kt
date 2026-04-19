@@ -13,7 +13,6 @@ import ru.autoevents.auto_events_client.feature.home.domain.model.EventTypeUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.ProfileDataUi
 import ru.autoevents.auto_events_client.feature.home.domain.model.RegisterDataUi
-import kotlin.coroutines.EmptyCoroutineContext.get
 import kotlin.jvm.JvmName
 
 fun RegisterResponseDto.mapToUi(): RegisterDataUi = RegisterDataUi(
