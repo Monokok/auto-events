@@ -30,9 +30,8 @@ data class MobileNavigatorItem(
     val title: String,
     val selected: Boolean = false,
     val onClick: () -> Unit,
-//    val icon: MobileNavigatorIcon? = null,
-    val icon: (@Composable (isSelected: Boolean) -> Unit)? = null,
     val contentDescription: String = title,
+    val icon: (@Composable (isSelected: Boolean) -> Unit)? = null, //    val icon: MobileNavigatorIcon? = null,
 )
 
 private val DefaultMobileNavigatorIcon = Res.drawable.ic_calendar
