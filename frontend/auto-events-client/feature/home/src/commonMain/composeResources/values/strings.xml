@@ -13,4 +13,7 @@
     <string name="current_location">Текущая локация</string>
     <string name="event_type_content_description">Событие с типом: %s</string>
     <string name="all">Все</string>
+    <string name="profile">Профиль</string>
+    <string name="failed_to_get_profile">Ошибка получения данных профиля</string>
+    <string name="failed_login">Произошла ошибка</string>
 </resources>

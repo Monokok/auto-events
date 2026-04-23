@@ -19,6 +19,8 @@ expect fun createHttpClient(): HttpClient
 
 //Общая настройка для всех платформ
 fun HttpClientConfig<*>.init() = run {
+    expectSuccess = true //
+
     install(ContentNegotiation) {
         json(Json {
             ignoreUnknownKeys = true      // игнорировать неизвестные поля в JSON

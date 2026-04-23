@@ -11,3 +11,7 @@ internal actual fun MainScreenContent(
 ) {
     MainContent(state, onAction, navigateToEventInfo)
 }
+
+@Composable
+internal actual fun MainScreenBottomBar(navigateToMain: () -> Unit, navigateToProfile: () -> Unit) {
+}

@@ -25,8 +25,8 @@ import ru.autoevents.auto_events_client.core.ui.theme.white900
 @Composable
 internal fun WebHeader(
     locationContent: @Composable () -> Unit = {},
+    navigationContent: @Composable () -> Unit = {},
     navigateBack: (() -> Unit)? = null,
-    //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
 ) {
     Row(
         modifier = Modifier
@@ -66,6 +66,7 @@ internal fun WebHeader(
                 style = MaterialTheme.typography.inter14Normal
             )
         }
+        navigationContent()
         Spacer(modifier = Modifier.weight(1f))
         locationContent()
     }
@@ -74,9 +75,10 @@ internal fun WebHeader(
 @Composable
 internal fun MobileHeader(
     locationContent: @Composable () -> Unit = {},
+    navigationContent: @Composable () -> Unit = {},
     navigateBack: (() -> Unit)? = null,
-    //TODO: прокинуть navigationContent для навигации в хедере и сделать отрисовку в теле функции
 ) {
+    //TODO: отрисовать navigationContent если он потребуется
     Row(
         modifier = Modifier
             .height(IntrinsicSize.Min)
@@ -111,7 +113,11 @@ internal fun MobileHeader(
 }
 
 @Composable
-expect fun Header(locationContent: @Composable () -> Unit = {}, navigateBack: (() -> Unit)? = null)
+expect fun Header(
+    locationContent: @Composable () -> Unit = {},
+    navigationContent: @Composable () -> Unit = {},
+    navigateBack: (() -> Unit)? = null
+)
 
 @Preview(widthDp = 1200)
 

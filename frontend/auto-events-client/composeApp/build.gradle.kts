@@ -45,6 +45,9 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(projects.feature.home)
+            implementation(projects.feature.profile)
+            implementation(projects.feature.login)
+            implementation(projects.feature.register)
             implementation(projects.core.network)
             implementation(projects.core.ui)
 

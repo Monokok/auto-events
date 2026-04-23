@@ -3,12 +3,18 @@ package ru.autoevents.auto_events_client.feature.home.ui.main
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import auto_events_client.feature.home.generated.resources.Res
+import auto_events_client.feature.home.generated.resources.profile
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import ru.autoevents.auto_events_client.core.ui.components.Header
+import ru.autoevents.auto_events_client.core.ui.components.NavItem
+import ru.autoevents.auto_events_client.core.ui.components.NavigationContent
 import ru.autoevents.auto_events_client.core.ui.components.Screen
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.EventInfoScreen
+import ru.autoevents.auto_events_client.feature.profile.ui.profile.ProfileScreen
 
 /**
  * Экран главной страницы приложения.
@@ -24,10 +30,9 @@ class MainScreen : Screen {
      * Инициализирует [MainScreenModel] через DI и передаёт его в [MainScreen].
      */
     @Composable
-    override fun Content() =
-        MainScreen(
-            screenModel = koinInject()
-        )
+    override fun Content() = MainScreen(
+        screenModel = koinInject()
+    )
 }
 
 /**
@@ -44,34 +49,51 @@ private fun MainScreen(
 ) {
     val state by screenModel.state.collectAsState()
     val navigator = LocalNavigator.current
+    val items = listOf(
+//        NavItem("Home") {
+//            navigator?.push(MainScreen())
+//        },
+
+        NavItem(
+            stringResource(
+                Res.string.profile
+            )
+        ) {
+            navigator?.push(ProfileScreen())
+        }
+    )
 
     Screen(
         topBar = {
             Header(locationContent = {
-                ButtonLocation(
-                    cities = state.cities,
-                    setLocation = { city ->
-                        screenModel.pushAction(
-                            Action.ChangeFilter(
-                                cityId = city.id,
-                                typeId = state.selectedEventTypeId
-                            )
+                ButtonLocation(cities = state.cities, setLocation = { city ->
+                    screenModel.pushAction(
+                        Action.ChangeFilter(
+                            cityId = city.id, typeId = state.selectedEventTypeId
                         )
-                    },
-                    resetLocation = {
-                        screenModel.pushAction(Action.ChangeFilter(cityId = null, typeId = state.selectedEventTypeId))
-                    }
-                )
+                    )
+                }, resetLocation = {
+                    screenModel.pushAction(
+                        Action.ChangeFilter(
+                            cityId = null, typeId = state.selectedEventTypeId
+                        )
+                    )
+                })
+            }, navigationContent = {
+                NavigationContent(items = items)
             })
+        },
+        bottomBar = {
+            MainScreenBottomBar(
+                navigateToMain = {},
+                navigateToProfile = { navigator?.push(ProfileScreen()) }
+            )
         }
     ) {
         MainScreenContent(
-            state = state,
-            onAction = screenModel::pushAction,
-            navigateToEventInfo = {
+            state = state, onAction = screenModel::pushAction, navigateToEventInfo = {
                 navigator?.push(EventInfoScreen(it))
-            }
-        )
+            })
     }
 }
 
@@ -89,4 +111,13 @@ internal expect fun MainScreenContent(
     state: State,
     onAction: (Action) -> Unit,
     navigateToEventInfo: (Int) -> Unit,
+)
+
+/**
+ *
+ */
+@Composable
+internal expect fun MainScreenBottomBar(
+    navigateToMain: () -> Unit,
+    navigateToProfile: () -> Unit,
 )
