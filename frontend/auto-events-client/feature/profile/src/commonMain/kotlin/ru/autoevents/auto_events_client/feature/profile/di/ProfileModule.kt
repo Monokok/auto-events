@@ -10,7 +10,8 @@ import ru.autoevents.auto_events_client.feature.profile.ui.profile.ProfileScreen
 val profileScreensModule
     get() = module {
         single<AccessTokenProvider> { EmptyAccessTokenProvider() }
+
         single { UsersRepository(get()) }
         single { GetUserProfileUseCase(get()) }
-        factory { ProfileScreenModel(get(), get()) }
+        factory { ProfileScreenModel(get(), lazy { get<GetUserProfileUseCase>() }) }
     }

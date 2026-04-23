@@ -7,7 +7,7 @@ import ru.autoevents.auto_events_client.feature.profile.domain.useCases.GetUserP
 
 class ProfileScreenModel(
     private val accessTokenProvider: AccessTokenProvider,
-    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val getUserProfileUseCase: Lazy<GetUserProfileUseCase>,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State()
 ) {
@@ -70,7 +70,7 @@ class ProfileScreenModel(
             return
         }
 
-        getUserProfileUseCase.getUserProfile(token)
+        getUserProfileUseCase.value.getUserProfile(token)
             .onSuccess { profile ->
                 pushState {
                     it.copy(
