@@ -54,9 +54,11 @@ private fun MainScreen(
 //            navigator?.push(MainScreen())
 //        },
 
-        NavItem(stringResource(
-            Res.string.profile
-        )) {
+        NavItem(
+            stringResource(
+                Res.string.profile
+            )
+        ) {
             navigator?.push(ProfileScreen())
         }
     )
@@ -80,7 +82,14 @@ private fun MainScreen(
             }, navigationContent = {
                 NavigationContent(items = items)
             })
-        }) {
+        },
+        bottomBar = {
+            MainScreenBottomBar(
+                navigateToMain = {},
+                navigateToProfile = { navigator?.push(ProfileScreen()) }
+            )
+        }
+    ) {
         MainScreenContent(
             state = state, onAction = screenModel::pushAction, navigateToEventInfo = {
                 navigator?.push(EventInfoScreen(it))
@@ -102,4 +111,13 @@ internal expect fun MainScreenContent(
     state: State,
     onAction: (Action) -> Unit,
     navigateToEventInfo: (Int) -> Unit,
+)
+
+/**
+ *
+ */
+@Composable
+internal expect fun MainScreenBottomBar(
+    navigateToMain: () -> Unit,
+    navigateToProfile: () -> Unit,
 )
