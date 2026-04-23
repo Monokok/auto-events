@@ -1,0 +1,19 @@
+<resources>
+    <string name="free">бесплатно</string>
+    <string name="paid_for">платно</string>
+    <string name="nearest_events">Ближайшие события</string>
+    <string name="popular_events">Популярные события</string>
+    <string name="all_events">Все события</string>
+    <string name="organizer">Организатор</string>
+    <string name="about_event">О событии</string>
+    <string name="participation">Участие</string>
+    <string name="date">Дата</string>
+    <string name="location">Локация</string>
+    <string name="main_page">Главная</string>
+    <string name="current_location">Текущая локация</string>
+    <string name="event_type_content_description">Событие с типом: %s</string>
+    <string name="all">Все</string>
+    <string name="profile">Профиль</string>
+    <string name="failed_to_get_profile">Ошибка получения данных профиля</string>
+    <string name="failed_login">Произошла ошибка</string>
+</resources>

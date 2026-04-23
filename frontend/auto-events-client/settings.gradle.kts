@@ -33,3 +33,10 @@ plugins {
 }
 
 include(":composeApp")
+include(":core:ui")
+include(":core:common")
+include(":core:network")
+include(":feature:home")
+include(":feature:profile")
+include(":feature:login")
+include(":feature:register")

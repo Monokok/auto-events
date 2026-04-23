@@ -1,0 +1,25 @@
+package ru.autoevents.auto_events_client.feature.home.domain.model
+
+import androidx.compose.runtime.Immutable
+import kotlinx.datetime.LocalDateTime
+
+@Immutable
+data class EventUi(
+    val id: Int,
+    val title: String,
+    val description: String,
+    val eventType: String,
+    val region: String,
+    val city: String,
+    val venue: String,
+    val startsAt: LocalDateTime?,
+    val endsAt: LocalDateTime?,
+    val isFree: Boolean,
+    val ticketUrl: String?,
+    val registrationUrl: String?,
+    val pictureUrl: String?,
+    val status: String,
+    val participantPrice: Int,
+    val viewerPrice: Int,
+    val viewsCount: Int,
+)

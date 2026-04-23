@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="12dp"
+    android:height="12dp"
+    android:viewportWidth="12"
+    android:viewportHeight="12">
+  <path
+      android:pathData="M5.625,4.04V5.47L5.12,5.295C4.865,5.205 4.71,5.12 4.71,4.685C4.71,4.33 4.975,4.04 5.3,4.04H5.625V4.04Z"
+      android:fillColor="#9658EC"/>
+  <path
+      android:pathData="M7.29,7.315C7.29,7.67 7.025,7.96 6.7,7.96H6.375V6.53L6.88,6.705C7.135,6.795 7.29,6.88 7.29,7.315Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="7.29"
+          android:startY="7.96"
+          android:endX="5.992"
+          android:endY="7.129"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF7952FC"/>
+        <item android:offset="1" android:color="#FFB15CDE"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M8.095,1H3.905C2.085,1 1,2.085 1,3.905V8.095C1,9.915 2.085,11 3.905,11H8.095C9.915,11 11,9.915 11,8.095V3.905C11,2.085 9.915,1 8.095,1ZM7.13,6C7.52,6.135 8.04,6.42 8.04,7.315C8.04,8.085 7.44,8.71 6.7,8.71H6.375V9C6.375,9.205 6.205,9.375 6,9.375C5.795,9.375 5.625,9.205 5.625,9V8.71H5.445C4.625,8.71 3.96,8.015 3.96,7.165C3.96,6.96 4.125,6.79 4.335,6.79C4.54,6.79 4.71,6.96 4.71,7.165C4.71,7.605 5.04,7.96 5.445,7.96H5.625V6.265L4.87,6C4.48,5.865 3.96,5.58 3.96,4.685C3.96,3.915 4.56,3.29 5.3,3.29H5.625V3C5.625,2.795 5.795,2.625 6,2.625C6.205,2.625 6.375,2.795 6.375,3V3.29H6.555C7.375,3.29 8.04,3.985 8.04,4.835C8.04,5.04 7.875,5.21 7.665,5.21C7.46,5.21 7.29,5.04 7.29,4.835C7.29,4.395 6.96,4.04 6.555,4.04H6.375V5.735L7.13,6Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="11"
+          android:startY="11"
+          android:endX="1"
+          android:endY="1"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF7952FC"/>
+        <item android:offset="1" android:color="#FFB15CDE"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+</vector>
