@@ -2,7 +2,6 @@ package ru.autoevents.auto_events_client.core.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 fun NavigationContent(items: List<NavItem>) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
             .height(40.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
