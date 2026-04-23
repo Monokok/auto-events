@@ -1,13 +1,13 @@
 package ru.autoevents.auto_events_client.feature.profile.ui.profile
 
-import ru.autoevents.auto_events_client.core.common.auth.AccessTokenProvider
+import ru.autoevents.auto_events_client.core.common.tokenStorage.TokenStorage
 import ru.autoevents.auto_events_client.core.network.error.isUnauthorizedResponse
 import ru.autoevents.auto_events_client.core.ui.mvi.MviScreenModel
 import ru.autoevents.auto_events_client.feature.profile.domain.useCases.GetUserProfileUseCase
 
 class ProfileScreenModel(
-    private val accessTokenProvider: AccessTokenProvider,
-    private val getUserProfileUseCase: Lazy<GetUserProfileUseCase>,
+    private val tokenStorage: TokenStorage,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State()
 ) {
@@ -19,10 +19,6 @@ class ProfileScreenModel(
     override suspend fun handleAction(action: Action) {
         when (action) {
             Action.Init -> initScreen()
-            Action.OpenRegister -> openRegister()
-            Action.OpenLogin -> openLogin()
-            is Action.Login -> login(action.username, action.password)
-            is Action.Register -> register(action.username, action.email, action.password)
             Action.LoadProfile -> loadProfile()
             Action.Logout -> logout()
         }
@@ -39,38 +35,14 @@ class ProfileScreenModel(
         loadProfile()
     }
 
-    private fun openRegister() {
-        pushEffect { Effect.NavigateToRegister }
-    }
-
-    private fun openLogin() {
-        pushEffect { Effect.NavigateToLogin }
-    }
-
-    private fun login(username: String, password: String) {
-        pushState {
-            it.copy(
-                isLoginLoading = true
-            )
-        }
-    }
-
-    private fun register(username: String, email: String, password: String) {
-        pushState {
-            it.copy(
-                isRegisterLoading = true
-            )
-        }
-    }
-
     private suspend fun loadProfile() {
-        val token = accessTokenProvider.getAccessToken()?.takeIf { it.isNotBlank() }
-        if (token == null) {
+        val token = tokenStorage.getAccessToken()
+        if (token.isNullOrBlank()) {
             redirectToLogin()
             return
         }
 
-        getUserProfileUseCase.value.getUserProfile(token)
+        getUserProfileUseCase.invoke(token)
             .onSuccess { profile ->
                 pushState {
                     it.copy(
