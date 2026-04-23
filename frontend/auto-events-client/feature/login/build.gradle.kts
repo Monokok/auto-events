@@ -41,6 +41,7 @@ kotlin {
             implementation(projects.core.ui)
             implementation(projects.core.common)
             implementation(projects.core.network)
+            implementation(projects.feature.register)
 
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.screenmodel)

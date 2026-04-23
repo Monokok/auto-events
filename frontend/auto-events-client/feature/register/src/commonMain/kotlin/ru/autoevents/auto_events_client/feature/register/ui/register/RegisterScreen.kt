@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import ru.autoevents.auto_events_client.core.ui.components.Screen as AppScreen
  * Использует [Screen] из Voyager для навигации и внедряет [RegisterScreenModel]
  * через Koin. Является точкой входа в UI экрана регистрации.
  */
+
 class RegisterScreen : Screen {
 
     /**
@@ -50,6 +52,14 @@ private fun RegisterScreen(
 ) {
     val state by screenModel.state.collectAsState()
     val navigator = LocalNavigator.current
+
+    LaunchedEffect(screenModel) {
+        screenModel.effect.collect { effect ->
+            when (effect) {
+                Effect.NavigateBackToLogin -> navigator?.pop()
+            }
+        }
+    }
 
     AppScreen(
         topBar = {

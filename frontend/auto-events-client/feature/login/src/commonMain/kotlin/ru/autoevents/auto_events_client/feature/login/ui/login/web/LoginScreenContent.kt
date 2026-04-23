@@ -15,6 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import auto_events_client.feature.login.generated.resources.Res
+import auto_events_client.feature.login.generated.resources.error_happened
+import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.theme.dark900
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Bold
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
@@ -37,7 +40,7 @@ fun LoginContent(
 //                .fillMaxWidth(0.5f)
                 .widthIn(max = 600.dp).padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
+            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         ) {
 
             //заголовочный блок
@@ -70,6 +73,7 @@ fun LoginContent(
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 var username by remember { mutableStateOf("") }
                 //input login
@@ -106,7 +110,7 @@ fun LoginContent(
                 val loginState = state.authState as? AuthState.LoggingIn
                 if (loginState?.error != null) {
                     Text(
-                        text = loginState.error,
+                        text = stringResource(Res.string.error_happened),//loginState.error,
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.inter14Normal,
                         modifier = Modifier.padding(horizontal = 4.dp)

@@ -27,6 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import auto_events_client.feature.register.generated.resources.Res
+import auto_events_client.feature.register.generated.resources.error_happened
+import org.jetbrains.compose.resources.stringResource
 import ru.autoevents.auto_events_client.core.ui.components.TermsAndPrivacyTextModern
 import ru.autoevents.auto_events_client.core.ui.theme.dark900
 import ru.autoevents.auto_events_client.core.ui.theme.inter14Bold
@@ -140,7 +143,7 @@ fun RegisterContent(
             val registerState = state.authState as? ru.autoevents.auto_events_client.feature.register.ui.register.AuthState.Registering
             if (registerState?.error != null) {
                 Text(
-                    text = registerState.error,
+                    text = stringResource(Res.string.error_happened), //registerState.error,
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.inter14Normal,
                     modifier = Modifier.padding(horizontal = 4.dp)

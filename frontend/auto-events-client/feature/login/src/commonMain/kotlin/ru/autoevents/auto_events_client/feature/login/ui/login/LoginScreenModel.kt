@@ -8,84 +8,84 @@ class LoginScreenModel(
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State(),
 ) {
-    init {
-        pushAction(Action.OpenRegister)
-    }
-
     override suspend fun handleAction(action: Action) {
         when (action) {
-
-            Action.Init -> pushAction(Action.Init)
-
-
-            //юзверь хочет перейти к регистрации
-            Action.OpenRegister -> {
-//                pushState {
-//                    it.copy(
-//                        authState = AuthState.Registering(
-//                            //в теории здесь можно подхватить какие-то данные, которые по умолчанию будут подхватываться в UI
-//                        ) //на основе данного состояния UI среагирует и отрисует RegisterComponent()
-//                    )
-//                }
-            }
-
-            Action.OpenLogin -> {
-                pushState {
-                    it.copy(
-                        authState = AuthState.LoggingIn()
-                    )
-                }
-            }
-
-            is Action.Login -> {
-                login(action.username, action.password)
-            }
-
-            else -> Unit
+            Action.Init -> initScreen()
+            Action.OpenRegister -> openRegister()
+            is Action.Login -> login(action.username, action.password)
         }
     }
 
+    private fun initScreen() {
+        pushState {
+            it.copy(
+                isLoading = false,
+                authState = AuthState.LoggingIn(),
+            )
+        }
+    }
+
+    private fun openRegister() {
+        pushEffect { Effect.NavigateToRegister }
+    }
+
     private suspend fun login(username: String, password: String) {
+        pushState {
+            it.copy(
+                isLoading = true,
+                authState = AuthState.LoggingIn(
+                    username = username,
+                    password = password,
+                ),
+            )
+        }
+
         authorizationUseCase.login(username, password)
             .onSuccess { token ->
                 authorizationUseCase.getUserProfile(token)
                     .onSuccess { profile ->
+//                        pushEffect { Effect.LoginSucceeded }
                         pushState {
                             it.copy(
                                 isLoading = false,
                                 authState = AuthState.Authorized(
                                     profile = profile,
-                                    accessToken = token
-                                )
+                                    accessToken = token,
+                                ),
                             )
                         }
                     }
                     .onFailure { error ->
-                        // Ошибка получения профиля - остаемся на экране логина
-                        pushState {
-                            it.copy(
-                                isLoading = false,
-                                authState = AuthState.LoggingIn(
-                                    username = username,
-                                    password = password,
-                                    error = error.message ?: "Ошибка получения данных профиля"
-                                )
-                            )
-                        }
+                        pushLoginError(
+                            username = username,
+                            password = password,
+                            message = error.message ?: "Failed to load profile",
+                        )
                     }
             }
             .onFailure { error ->
-                // Ошибка логина - остаемся на экране логина
-                pushState {
-                    it.copy(
-                        isLoading = false,
-                        authState = AuthState.LoggingIn(
-                            username = username,
-                            password = password,
-                            error = error.message ?: "Неверный логин или пароль"
-                        )
-                    )
-                }
+                pushLoginError(
+                    username = username,
+                    password = password,
+                    message = error.message ?: "Invalid username or password",
+                )
             }
+    }
+
+    private fun pushLoginError(
+        username: String,
+        password: String,
+        message: String,
+    ) {
+        pushState {
+            it.copy(
+                isLoading = false,
+                authState = AuthState.LoggingIn(
+                    username = username,
+                    password = password,
+                    error = message,
+                ),
+            )
+        }
     }
 }

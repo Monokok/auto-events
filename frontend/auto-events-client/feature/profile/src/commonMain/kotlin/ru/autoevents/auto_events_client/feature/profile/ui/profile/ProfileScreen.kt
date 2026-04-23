@@ -59,8 +59,8 @@ private fun ProfileScreen(
     LaunchedEffect(screenModel) {
         screenModel.effect.collect { effect ->
             when (effect) {
-                Effect.NavigateToLogin -> navigator?.push(LoginScreen())
-                Effect.NavigateToRegister -> navigator?.push(RegisterScreen())
+                Effect.NavigateToLogin -> navigator?.replace(LoginScreen())
+                Effect.NavigateToRegister -> navigator?.replace(RegisterScreen())
                 is Effect.ShowError -> Unit
             }
         }

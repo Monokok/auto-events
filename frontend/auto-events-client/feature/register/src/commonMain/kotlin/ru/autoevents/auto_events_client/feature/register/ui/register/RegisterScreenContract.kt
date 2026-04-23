@@ -4,7 +4,9 @@ import ru.autoevents.auto_events_client.core.ui.mvi.MviAction
 import ru.autoevents.auto_events_client.core.ui.mvi.MviEffect
 import ru.autoevents.auto_events_client.core.ui.mvi.MviState
 
-sealed interface Effect : MviEffect
+sealed interface Effect : MviEffect {
+    object NavigateBackToLogin : Effect
+}
 
 sealed interface Action : MviAction {
     object Init : Action
@@ -22,8 +24,6 @@ data class State(
 sealed interface AuthState {
 
     object Unauthorized : AuthState
-
-    data class Error(val message: String, val cause: Throwable? = null) : AuthState
 
     data class Registering(
         val email: String = "",
