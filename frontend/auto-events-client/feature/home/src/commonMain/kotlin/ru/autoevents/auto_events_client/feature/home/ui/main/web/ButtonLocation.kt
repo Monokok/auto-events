@@ -62,7 +62,7 @@ fun WebButtonLocation(
             modifier = Modifier
                 .width(210.dp)
                 .clip(RoundedCornerShape(50.dp))
-                .clickable { showCityDropdownMenu = !isExpanded }
+                .clickable { showCityDropdownMenu = !showCityDropdownMenu }
                 .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
                 .padding(horizontal = 25.dp, vertical = 16.dp)
         ) {
