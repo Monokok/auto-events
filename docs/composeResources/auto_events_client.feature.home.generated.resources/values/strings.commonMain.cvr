@@ -5,6 +5,8 @@ string|all|0JLRgdC1
 string|current_location|0KLQtdC60YPRidCw0Y8g0LvQvtC60LDRhtC40Y8=
 string|date|0JTQsNGC0LA=
 string|event_type_content_description|0KHQvtCx0YvRgtC40LUg0YEg0YLQuNC/0L7QvDogJXM=
+string|failed_login|0J/RgNC+0LjQt9C+0YjQu9CwINC+0YjQuNCx0LrQsA==
+string|failed_to_get_profile|0J7RiNC40LHQutCwINC/0L7Qu9GD0YfQtdC90LjRjyDQtNCw0L3QvdGL0YUg0L/RgNC+0YTQuNC70Y8=
 string|free|0LHQtdGB0L/Qu9Cw0YLQvdC+
 string|location|0JvQvtC60LDRhtC40Y8=
 string|main_page|0JPQu9Cw0LLQvdCw0Y8=
@@ -13,3 +15,4 @@ string|organizer|0J7RgNCz0LDQvdC40LfQsNGC0L7RgA==
 string|paid_for|0L/Qu9Cw0YLQvdC+
 string|participation|0KPRh9Cw0YHRgtC40LU=
 string|popular_events|0J/QvtC/0YPQu9GP0YDQvdGL0LUg0YHQvtCx0YvRgtC40Y8=
+string|profile|0J/RgNC+0YTQuNC70Yw=
