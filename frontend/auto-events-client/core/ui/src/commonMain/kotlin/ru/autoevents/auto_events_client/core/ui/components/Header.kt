@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_NO
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import auto_events_client.core.ui.generated.resources.Res
@@ -17,10 +19,7 @@ import auto_events_client.core.ui.generated.resources.ic_chevron_left
 import auto_events_client.core.ui.generated.resources.slogan
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ru.autoevents.auto_events_client.core.ui.theme.dark900
-import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
-import ru.autoevents.auto_events_client.core.ui.theme.inter16Bold
-import ru.autoevents.auto_events_client.core.ui.theme.white900
+import ru.autoevents.auto_events_client.core.ui.theme.*
 
 @Composable
 internal fun WebHeader(
@@ -32,9 +31,10 @@ internal fun WebHeader(
         modifier = Modifier
             .height(IntrinsicSize.Min)
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .padding(horizontal = 16.dp, vertical = 0.dp)
             .clip(RoundedCornerShape(50.dp))
-            .background(MaterialTheme.colorScheme.primary)
+//            .background(MaterialTheme.colorScheme.primary900)
+            .background(MaterialTheme.colorScheme.diagonalGradient)
             .padding(horizontal = 20.dp, vertical = 30.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -56,14 +56,14 @@ internal fun WebHeader(
         ) {
             Text(
                 text = stringResource(Res.string.auto_events),
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.inter30ExtraBold,
+                color = MaterialTheme.colorScheme.white950,
                 fontWeight = FontWeight.Bold,
             )
             Text(
                 text = stringResource(Res.string.slogan),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.inter14Normal
+                style = MaterialTheme.typography.inter14Normal,
+                color = MaterialTheme.colorScheme.white950,
             )
         }
         navigationContent()
@@ -119,9 +119,9 @@ expect fun Header(
     navigateBack: (() -> Unit)? = null
 )
 
-@Preview(widthDp = 1200)
-
 @Composable
+@Preview(widthDp = 1200, uiMode = UI_MODE_NIGHT_NO)
+@Preview(widthDp = 1200, uiMode = UI_MODE_NIGHT_YES)
 fun HeaderPreview() {
     WebHeader()
 }

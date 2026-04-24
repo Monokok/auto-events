@@ -1,3 +1,4 @@
+
 package ru.autoevents.auto_events_client.feature.home.ui.main
 
 import androidx.compose.animation.animateColorAsState

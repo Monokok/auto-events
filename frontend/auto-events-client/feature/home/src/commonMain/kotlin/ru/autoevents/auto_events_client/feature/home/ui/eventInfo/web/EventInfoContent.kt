@@ -21,6 +21,11 @@ import org.jetbrains.compose.resources.painterResource
 import ru.autoevents.auto_events_client.core.ui.components.LoaderFullScreen
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
 import ru.autoevents.auto_events_client.core.ui.models.LocalImageLoader
+import ru.autoevents.auto_events_client.core.ui.theme.dark900
+import ru.autoevents.auto_events_client.core.ui.theme.inter14Normal
+import ru.autoevents.auto_events_client.core.ui.theme.inter16Bold
+import ru.autoevents.auto_events_client.core.ui.theme.primary900
+import ru.autoevents.auto_events_client.core.ui.theme.secondary50
 import ru.autoevents.auto_events_client.feature.home.domain.model.EventUi
 import ru.autoevents.auto_events_client.feature.home.ui.eventInfo.State
 
@@ -76,31 +81,37 @@ private fun EventBodyContent(
                 Column {
                     Text(
                         text = "ФАС Иваново", // В реальном проекте брать из event.organizerName
-                        style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary
+                        style = MaterialTheme.typography.inter14Normal,
+                        color = MaterialTheme.colorScheme.primary900
                     )
                     Text(
                         text = "Организатор",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.inter14Normal,
+                        color = MaterialTheme.colorScheme.dark900
                     )
                 }
             }
 
             // Заголовок мероприятия
             Text(
-                text = event.title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold
+                text = event.title,
+                style = MaterialTheme.typography.inter16Bold,
+                color = MaterialTheme.colorScheme.primary900
+//                fontWeight = FontWeight.Bold
             )
 
             // Раздел "О событии"
             Text(
-                text = "О событии", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold
+                text = "О событии",
+                style = MaterialTheme.typography.inter14Normal,
+                color = MaterialTheme.colorScheme.primary900
             )
 
             // Описание события
             Text(
                 text = event.description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.inter14Normal,
+                color = MaterialTheme.colorScheme.dark900,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis
             )
@@ -115,8 +126,8 @@ private fun EventBodyContent(
 //                    icon = Icons.Default.AttachMoney,
                     label = "Участие",
                     value = if (event.isFree) "Бесплатно" else "Платно",
-                    tint = if (!event.isFree) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = if (!event.isFree) MaterialTheme.colorScheme.dark900
+                    else MaterialTheme.colorScheme.primary900
                 )
 
                 // Дата
@@ -156,13 +167,15 @@ private fun InfoColumn(
 //            )
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.inter14Normal,
+                color = MaterialTheme.colorScheme.primary900
             )
         }
 
         Text(
-            text = value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium
+            text = value,
+            style = MaterialTheme.typography.inter14Normal,
+            color = MaterialTheme.colorScheme.dark900
         )
     }
 }
