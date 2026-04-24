@@ -38,7 +38,12 @@ class ProfileScreenModel(
     private suspend fun loadProfile() {
         val token = tokenStorage.getAccessToken()
         if (token.isNullOrBlank()) {
-            redirectToLogin()
+            pushState {
+                it.copy(
+                    authState = AuthState.Unauthenticated,
+                    isLoading = false,
+                )
+            }
             return
         }
 
@@ -67,7 +72,8 @@ class ProfileScreenModel(
             }
     }
 
-    private fun logout() {
+    private suspend fun logout() {
+        tokenStorage.clear()
         redirectToLogin()
     }
 

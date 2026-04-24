@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,6 +15,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import org.koin.compose.koinInject
 import ru.autoevents.auto_events_client.core.ui.components.Header
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
+import ru.autoevents.auto_events_client.core.ui.mvi.MviEffectResolver
 import ru.autoevents.auto_events_client.feature.login.ui.login.LoginScreen
 import ru.autoevents.auto_events_client.feature.register.ui.register.RegisterScreen
 import ru.autoevents.auto_events_client.core.ui.components.Screen as AppScreen
@@ -56,13 +56,11 @@ private fun ProfileScreen(
     val state by screenModel.state.collectAsState()
     val navigator = LocalNavigator.current
 
-    LaunchedEffect(screenModel) {
-        screenModel.effect.collect { effect ->
-            when (effect) {
-                Effect.NavigateToLogin -> navigator?.replace(LoginScreen())
-                Effect.NavigateToRegister -> navigator?.replace(RegisterScreen())
-                is Effect.ShowError -> Unit
-            }
+    MviEffectResolver(screenModel.effect) {
+        when (it) {
+            Effect.NavigateToLogin -> navigator?.push(LoginScreen())
+            Effect.NavigateToRegister -> navigator?.push(RegisterScreen())
+            is Effect.ShowError -> Unit
         }
     }
 
@@ -77,7 +75,8 @@ private fun ProfileScreen(
     ) {
         ProfileScreenContent(
             state = state,
-            onAction = screenModel::pushAction
+            onAction = screenModel::pushAction,
+            navigateLogin = { navigator?.push(LoginScreen()) }
         )
     }
 }
@@ -94,7 +93,8 @@ private fun ProfileScreen(
 @Composable
 internal expect fun ProfileScreenContent(
     state: State,
-    onAction: (Action) -> Unit
+    onAction: (Action) -> Unit,
+    navigateLogin: () -> Unit,
 )
 
 @Composable

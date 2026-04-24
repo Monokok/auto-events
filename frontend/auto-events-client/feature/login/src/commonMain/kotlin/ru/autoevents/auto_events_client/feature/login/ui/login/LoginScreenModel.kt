@@ -45,6 +45,7 @@ class LoginScreenModel(
         authorizationUseCase.login(username, password)
             .onSuccess { token ->
                 tokenStorage.saveAccessToken(token)
+                pushEffect { Effect.LoginSucceeded }
             }
             .onFailure { error ->
                 pushLoginError(
