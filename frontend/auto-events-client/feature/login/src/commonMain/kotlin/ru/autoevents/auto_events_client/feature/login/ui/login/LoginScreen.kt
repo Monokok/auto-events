@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,6 +15,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import org.koin.compose.koinInject
 import ru.autoevents.auto_events_client.core.ui.components.Header
 import ru.autoevents.auto_events_client.core.ui.components.WebPreview
+import ru.autoevents.auto_events_client.core.ui.mvi.MviEffectResolver
 import ru.autoevents.auto_events_client.feature.register.ui.register.RegisterScreen
 import ru.autoevents.auto_events_client.core.ui.components.Screen as AppScreen
 
@@ -54,12 +54,10 @@ private fun LoginScreen(
     val state by screenModel.state.collectAsState()
     val navigator = LocalNavigator.current
 
-    LaunchedEffect(screenModel) {
-        screenModel.effect.collect { effect ->
-            when (effect) {
-                Effect.NavigateToRegister -> navigator?.push(RegisterScreen())
-                Effect.LoginSucceeded -> navigator?.pop()
-            }
+    MviEffectResolver(screenModel.effect){
+        when (it) {
+            Effect.NavigateToRegister -> navigator?.push(RegisterScreen())
+            Effect.LoginSucceeded -> navigator?.pop()
         }
     }
 

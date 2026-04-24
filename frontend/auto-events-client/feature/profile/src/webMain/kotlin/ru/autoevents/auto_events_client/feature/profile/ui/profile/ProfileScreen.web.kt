@@ -6,10 +6,12 @@ import ru.autoevents.auto_events_client.feature.profile.ui.profile.web.ProfileCo
 @Composable
 internal actual fun ProfileScreenContent(
     state: State,
-    onAction: (Action) -> Unit
+    onAction: (Action) -> Unit,
+    navigateLogin: () -> Unit,
 ) {
     ProfileContent(
         state = state,
-        onAction = onAction
+        onAction = onAction,
+        navigateLogin = navigateLogin,
     )
 }
