@@ -1,10 +1,12 @@
 package ru.autoevents.auto_events_client.feature.login.ui.login
 
+import ru.autoevents.auto_events_client.core.common.tokenStorage.TokenStorage
 import ru.autoevents.auto_events_client.core.ui.mvi.MviScreenModel
 import ru.autoevents.auto_events_client.feature.login.domain.useCases.AuthorizationUseCase
 
 class LoginScreenModel(
     private val authorizationUseCase: AuthorizationUseCase,
+    private val tokenStorage: TokenStorage,
 ) : MviScreenModel<Effect, Action, State>(
     defaultState = State(),
 ) {
@@ -42,26 +44,7 @@ class LoginScreenModel(
 
         authorizationUseCase.login(username, password)
             .onSuccess { token ->
-                authorizationUseCase.getUserProfile(token)
-                    .onSuccess { profile ->
-//                        pushEffect { Effect.LoginSucceeded }
-                        pushState {
-                            it.copy(
-                                isLoading = false,
-                                authState = AuthState.Authorized(
-                                    profile = profile,
-                                    accessToken = token,
-                                ),
-                            )
-                        }
-                    }
-                    .onFailure { error ->
-                        pushLoginError(
-                            username = username,
-                            password = password,
-                            message = error.message ?: "Failed to load profile",
-                        )
-                    }
+                tokenStorage.saveAccessToken(token)
             }
             .onFailure { error ->
                 pushLoginError(

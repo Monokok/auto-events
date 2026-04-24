@@ -10,10 +10,10 @@ import ru.autoevents.auto_events_client.feature.register.di.registerScreensModul
 
 private val featureModules
     get() = listOf(
-        homeScreensModule,
         profileScreensModule,
         loginScreensModule,
-        registerScreensModule
+        registerScreensModule,
+        homeScreensModule
     )
 
 private val coreModules

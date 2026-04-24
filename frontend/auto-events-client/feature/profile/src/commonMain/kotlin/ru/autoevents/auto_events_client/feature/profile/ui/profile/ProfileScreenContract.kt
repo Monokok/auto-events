@@ -13,12 +13,8 @@ sealed interface Effect : MviEffect {
 
 sealed interface Action : MviAction {
     object Init : Action
-    data class Login(val username: String, val password: String) : Action
-    data class Register(val username: String, val email: String, val password: String) : Action
     object Logout : Action
     object LoadProfile : Action
-    object  OpenRegister: Action
-    object  OpenLogin : Action
 
 }
 
