@@ -4,11 +4,15 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models import City, Venue
+from venue.venue_filter import VenueFilter
 
 
 class IVenueRepository(ABC):
     @abstractmethod
     async def get_all_cities(self) -> list[City]: ...
+
+    @abstractmethod
+    async def get_all_venues(self, filter: VenueFilter) -> list[Venue]: ...
 
     @abstractmethod
     async def get_venue_by_id(self, id: int) -> Venue | None: ...
@@ -20,6 +24,15 @@ class VenueRepository(IVenueRepository):
 
     async def get_all_cities(self) -> list[City]:
         query = select(City).order_by(City.name)
+        result = await self.session.scalars(query)
+        return list(result.all())
+
+    async def get_all_venues(self, filter: VenueFilter) -> list[Venue]:
+        query = select(Venue)
+
+        query = filter.filter(query)
+        query = filter.sort(query)
+
         result = await self.session.scalars(query)
         return list(result.all())
 
