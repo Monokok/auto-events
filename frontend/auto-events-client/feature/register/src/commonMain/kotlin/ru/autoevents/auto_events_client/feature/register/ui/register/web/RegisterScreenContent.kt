@@ -77,8 +77,8 @@ fun RegisterContent(
                 ) {
                     Text(
                         text = "Уже есть аккаунт?",
-                        style = MaterialTheme.typography.inter14Normal
-                    )
+                        style = MaterialTheme.typography.inter14Normal,
+                        color = MaterialTheme.colorScheme.dark900,                    )
                     Text(
                         text = "Войти",
                         modifier = Modifier.clickable{
@@ -101,7 +101,10 @@ fun RegisterContent(
                     onValueChange = { username = it },
                     label = { Text("Укажите ваш логин") },
                     singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.inter14Normal.copy(
+                        color = MaterialTheme.colorScheme.dark900
+                    ),
                 )
 
                 var email by remember { mutableStateOf("") }
@@ -112,7 +115,10 @@ fun RegisterContent(
                     onValueChange = { email = it },
                     label = { Text("Укажите ваш email") },
                     singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.inter14Normal.copy(
+                        color = MaterialTheme.colorScheme.dark900
+                    ),
                 )
 
                 var password by remember { mutableStateOf("") }
@@ -124,7 +130,10 @@ fun RegisterContent(
                     label = { Text("Пароль") },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.inter14Normal.copy(
+                        color = MaterialTheme.colorScheme.dark900
+                    ),
                 )
 
 

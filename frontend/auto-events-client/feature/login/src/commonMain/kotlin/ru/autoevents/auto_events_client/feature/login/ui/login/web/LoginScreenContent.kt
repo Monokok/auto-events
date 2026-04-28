@@ -61,7 +61,8 @@ fun LoginContent(
                 ) {
                     Text(
                         text = "Нет аккаунта?",
-                        style = MaterialTheme.typography.inter14Normal
+                        style = MaterialTheme.typography.inter14Normal,
+                        color = MaterialTheme.colorScheme.dark900,
                     )
                     Text(
                         text = "Зарегистрироваться", modifier = Modifier.clickable {
@@ -83,7 +84,10 @@ fun LoginContent(
                     onValueChange = { username = it },
                     label = { Text("Укажите ваш логин") },
                     singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.inter14Normal.copy(
+                        color = MaterialTheme.colorScheme.dark900
+                    ),
                 )
 
                 var password by remember { mutableStateOf("") }
@@ -95,7 +99,10 @@ fun LoginContent(
                     label = { Text("Пароль") },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    textStyle = MaterialTheme.typography.inter14Normal.copy(
+                        color = MaterialTheme.colorScheme.dark900
+                    ),
                 )
                 Button(
                     modifier = Modifier.fillMaxWidth(),
