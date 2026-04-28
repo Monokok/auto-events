@@ -9,11 +9,13 @@ import ru.autoevents.auto_events_client.core.network.entity.EventTypeResponseDto
 
 class EventApi(private val client: HttpClient) {
 
-    suspend fun getEvents(cityId: Int?, typeId: Int?): EventResponseDto {
+    suspend fun getEvents(cityId: Int?, typeId: Int?, page: Int?, size: Int?): EventResponseDto {
         return client.get("/events") {
             url {
                 cityId?.let { parameter("city_id", it) }
                 typeId?.let { parameter("type_id", it) }
+                page?.let { parameter("page", it) }
+                size?.let { parameter("size", it) }
             }
         }.body()
     }

@@ -6,15 +6,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
 import auto_events_client.feature.home.generated.resources.Res
 import auto_events_client.feature.home.generated.resources.all_events
 import auto_events_client.feature.home.generated.resources.nearest_events
 import auto_events_client.feature.home.generated.resources.popular_events
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
@@ -31,6 +33,7 @@ internal fun MainContent(
     onAction: (Action) -> Unit,
     navigateToEventInfo: (Int) -> Unit,
 ) {
+    val events = state.events.collectAsLazyPagingItems()
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(vertical = 16.dp),
@@ -45,8 +48,10 @@ internal fun MainContent(
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 8.dp),
             ) {
-                items(state.events) { event ->
-                    EventCard(event = event, onClick = navigateToEventInfo)
+                items(events.itemCount) { index ->
+                    events[index]?.let { event ->
+                        EventCard(event = event, onClick = navigateToEventInfo)
+                    }
                 }
             }
         }
@@ -69,12 +74,14 @@ internal fun MainContent(
                 allText = stringResource(Res.string.all_events),
             )
         }
-        items(state.events) {
-            EventRow(
-                event = it,
-                onClick = navigateToEventInfo,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
+        items(events.itemCount) { index ->
+            events[index]?.let { event ->
+                EventRow(
+                    event = event,
+                    onClick = navigateToEventInfo,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                )
+            }
         }
     }
     LoaderFullScreen(state.loading)
@@ -86,7 +93,11 @@ private fun WebScreenPreview() {
     MaterialTheme {
         MainContent(
             state = State(
-                events = mockedList
+                events = flowOf(
+                    PagingData.from(
+                        mockedList
+                    )
+                ),
             ),
             onAction = {},
             navigateToEventInfo = {},

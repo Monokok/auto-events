@@ -1,5 +1,8 @@
 package ru.autoevents.auto_events_client.feature.home.ui.main
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ru.autoevents.auto_events_client.core.ui.mvi.MviAction
 import ru.autoevents.auto_events_client.core.ui.mvi.MviEffect
 import ru.autoevents.auto_events_client.core.ui.mvi.MviState
@@ -15,7 +18,7 @@ sealed interface Effect : MviEffect
  */
 sealed interface Action : MviAction {
     data class GetEvents(val cityId: Int?, val typeId: Int? = null) : Action
-    data object GetEventTypes: Action
+    data object GetEventTypes : Action
     data object Init : Action
     data class ChangeFilter(val cityId: Int?, val typeId: Int?) : Action
 }
@@ -27,7 +30,7 @@ sealed interface Action : MviAction {
  * @param [eventTypes] список типов, которые можно получить через api
  */
 data class State(
-    val events: List<EventUi> = emptyList(),
+    val events: Flow<PagingData<EventUi>> = flowOf(PagingData.empty()),
     val cities: List<CityUi> = emptyList(),
     val eventTypes: List<EventTypeUi> = emptyList(),
     val selectedEventTypeId: Int? = null,   //TODO: изменить на список
