@@ -6,3 +6,13 @@ class CityDTO(BaseModel):
 
     id: int
     name: str
+
+
+class VenueDTO(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    name: str
+    lat: float
+    lon: float
+    city: CityDTO

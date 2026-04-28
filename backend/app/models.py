@@ -10,6 +10,7 @@ class Base(AsyncAttrs, DeclarativeBase):
     """
     Базовая модель для ORM SQLAlchemy
     """
+
     metadata = MetaData(
         naming_convention={
             "ix": "ix_%(column_0_label)s",
@@ -45,6 +46,8 @@ class User(Base):
     role: Mapped[Role] = mapped_column(default="user")
     email: Mapped[str] = mapped_column(String(length=30), unique=True, nullable=False)
     password: Mapped[str]
+
+    events: Mapped[list[Event]] = relationship(back_populates="owner")
 
 
 class City(Base):
@@ -98,10 +101,11 @@ class Event(Base):
     description: Mapped[str] = mapped_column(String(500))
     link: Mapped[str | None] = mapped_column(String(200))
     picture_url: Mapped[str | None] = mapped_column(String(200))
-    status: Mapped[EventStatusEnum]
+    status: Mapped[EventStatusEnum] = mapped_column(default=EventStatusEnum.published)
     views_count: Mapped[int] = mapped_column(default=0)
     type_id: Mapped[int] = mapped_column(ForeignKey("event_types.id"))
     venue_id: Mapped[int] = mapped_column(ForeignKey("venues.id"))
+    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
     participant_price: Mapped[int | None]
     viewer_price: Mapped[int | None]
@@ -111,3 +115,4 @@ class Event(Base):
 
     type: Mapped[EventType] = relationship(back_populates="events", lazy="joined")
     venue: Mapped[Venue] = relationship(back_populates="events", lazy="joined")
+    owner: Mapped[User] = relationship(back_populates="events")
