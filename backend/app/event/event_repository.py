@@ -21,7 +21,13 @@ class IEventRepository(ABC):
     async def get_event_types(self, filter: EventTypeFilter) -> list[EventType]: ...
 
     @abstractmethod
+    async def get_type_by_id(self, id: int) -> EventType | None: ...
+
+    @abstractmethod
     async def get_by_id(self, event_id: int) -> Event | None: ...
+
+    @abstractmethod
+    async def create(self, event: Event) -> Event: ...
 
     @abstractmethod
     async def increment_views_count(self, event_id: int) -> Event: ...
@@ -62,6 +68,10 @@ class EventRepository(IEventRepository):
         result = await self.session.scalars(query)
         return list(result.unique())
 
+    async def get_type_by_id(self, id: int) -> EventType | None:
+        query = select(EventType).where(EventType.id == id)
+        return await self.session.scalar(query)
+
     async def get_by_id(self, event_id: int) -> Event | None:
         query = (
             select(Event)
@@ -82,3 +92,9 @@ class EventRepository(IEventRepository):
             .returning(Event)
         )
         return (await self.session.execute(query)).scalar_one()
+
+    async def create(self, event: Event) -> Event:
+        self.session.add(event)
+        await self.session.flush()
+
+        return event

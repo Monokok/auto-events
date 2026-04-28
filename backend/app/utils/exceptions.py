@@ -1,4 +1,9 @@
-class AppException(Exception): ...
+class AppException(Exception):
+    def __init__(self, *args: object) -> None:
+        self.message = (
+            args[0] if len(args) > 0 else "Произошла ошибка в работе приложения"
+        )
+        super().__init__(*args)
 
 
 class DbError(AppException): ...
@@ -23,3 +28,6 @@ class InvalidToken(AppException): ...
 
 
 class TokenExpire(AppException): ...
+
+
+class NotFound(AppException): ...

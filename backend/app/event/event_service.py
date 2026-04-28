@@ -1,6 +1,8 @@
 from database.uow import IUnitOfWork
 from event.event_filter import EventFilter, EventTypeFilter
-from event.event_schemas import EventShortDTO, EventTypeDTO
+from event.event_schemas import EventCreateDTO, EventShortDTO, EventTypeDTO
+from models import Event
+from utils.exceptions import NotFound
 from utils.pagination import Page, PaginationParams
 
 
@@ -42,3 +44,22 @@ class EventService:
                 await self.uow.commit()
 
         return EventShortDTO.model_validate(event)
+
+    async def create_event(
+        self, create_schema: EventCreateDTO, owner_id: int
+    ) -> EventShortDTO:
+        async with self.uow:
+            venue = await self.uow.venues.get_venue_by_id(create_schema.venue_id)
+            if venue is None:
+                raise NotFound(f"Venue (id={create_schema.venue_id}) not found")
+
+            event_type = await self.uow.events.get_type_by_id(create_schema.type_id)
+            if event_type is None:
+                raise NotFound(f"Event type (id={create_schema.type_id}) not found")
+
+            new_event = Event(**create_schema.model_dump(), owner_id=owner_id)
+            await self.uow.events.create(new_event)
+            await self.uow.commit()
+            new_event = await self.uow.events.get_by_id(new_event.id)
+
+        return EventShortDTO.model_validate(new_event)
