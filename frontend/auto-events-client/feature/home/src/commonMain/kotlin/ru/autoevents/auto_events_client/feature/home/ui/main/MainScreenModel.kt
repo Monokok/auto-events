@@ -1,5 +1,6 @@
 package ru.autoevents.auto_events_client.feature.home.ui.main
 
+import androidx.paging.cachedIn
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
@@ -25,7 +26,7 @@ class MainScreenModel(
 
     override suspend fun handleAction(action: Action) {
         when (action) {
-            is Action.GetEvents -> getEvents(action.cityId)
+            is Action.GetEvents -> loadEvents(action.cityId)
             is Action.ChangeFilter -> getEventsByFilter(cityId = action.cityId, typeId = action.typeId)
             Action.Init -> initLoad()
             Action.GetEventTypes -> loadEventTypes()
@@ -46,17 +47,13 @@ class MainScreenModel(
      * @param [cityId] id города для фильтра. if null - по всем городам
      * @param [typeId] id типа для фильтра. if null - по всем событиям
      */
-    private suspend fun loadEvents(cityId: Int? = null, typeId: Int? = null) {
-        val resultEvents = getEventListUseCase.invoke(cityId = cityId, typeId = typeId)
-        when {
-            resultEvents.isSuccess -> {
-                pushState {
-                    it.copy(
-                        loading = false,
-                        events = resultEvents.getOrNull() ?: emptyList(),
-                    )
-                }
-            }
+    private fun loadEvents(cityId: Int? = null, typeId: Int? = null) {
+        val resultEvents = getEventListUseCase.invoke(cityId = cityId, typeId = typeId).cachedIn(screenModelScope)
+        pushState {
+            it.copy(
+                loading = false,
+                events = resultEvents,
+            )
         }
     }
 
@@ -68,23 +65,6 @@ class MainScreenModel(
                     it.copy(
                         cities = resultEvents.getOrNull() ?: emptyList(),
                     )
-                }
-            }
-        }
-    }
-
-    private fun getEvents(cityId: Int?) {
-        screenModelScope.launch {
-            pushState { it.copy(loading = true) }
-            val result = getEventListUseCase.invoke(cityId)
-            when {
-                result.isSuccess -> {
-                    pushState {
-                        it.copy(
-                            loading = false,
-                            events = result.getOrNull() ?: emptyList(),
-                        )
-                    }
                 }
             }
         }
@@ -113,12 +93,11 @@ class MainScreenModel(
     private fun getEventsByFilter(cityId: Int?, typeId: Int?) {
         screenModelScope.launch {
             // обновляем выбранный тип - перерисовка интерфейса
-            pushState {
-                state ->
+            pushState { state ->
                 state.copy(
                     selectedCityId = cityId,
                     selectedEventTypeId = typeId,
-                    eventTypes = state.eventTypes.map{
+                    eventTypes = state.eventTypes.map {
                         it.copy(
                             isSelected = it.id == typeId
                         )
