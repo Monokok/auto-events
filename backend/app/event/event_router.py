@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi_filter.base.filter import FilterDepends
 
 from event.event_filter import EventFilter, EventTypeFilter
-from event.event_schemas import EventShortDTO, EventTypeDTO
+from event.event_schemas import EventShortDTO, EventTypeDTO, EventDetailDTO
 from event.event_service import EventService
 from utils.pagination import Page, PaginationParams
 
@@ -36,7 +36,7 @@ async def get_event_types(
 
 @event_router.get(
     "/{event_id}",
-    response_model=EventShortDTO,
+    response_model=EventDetailDTO,
     summary="Get event by id",
 )
 async def get_event_by_id(

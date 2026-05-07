@@ -1,6 +1,6 @@
 from database.uow import IUnitOfWork
 from event.event_filter import EventFilter, EventTypeFilter
-from event.event_schemas import EventShortDTO, EventTypeDTO
+from event.event_schemas import EventShortDTO, EventTypeDTO, EventDetailDTO
 from utils.pagination import Page, PaginationParams
 
 
@@ -32,7 +32,7 @@ class EventService:
 
     async def get_event_by_id(
         self, event_id: int, update_views_count: bool = True
-    ) -> EventShortDTO | None:
+    ) -> EventDetailDTO | None:
         async with self.uow:
             event = await self.uow.events.get_by_id(event_id)
             if event is None:
@@ -41,4 +41,4 @@ class EventService:
                 event = await self.uow.events.increment_views_count(event.id)
                 await self.uow.commit()
 
-        return EventShortDTO.model_validate(event)
+        return EventDetailDTO.model_validate(event)

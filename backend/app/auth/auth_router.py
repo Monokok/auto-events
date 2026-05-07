@@ -38,11 +38,11 @@ async def register(new_user: UserCreateDTO, auth_service: FromDishka[AuthService
     try:
         result_user = await auth_service.register(new_user)
         logger.info(
-            "User (id=%s,username=%s) has successfully registered",
-            result_user.id,
-            result_user.username,
+            "User (username=%s) has successfully registered",
+            new_user.username,
         )
-        return result_user
+        return AccessTokenDTO(access_token=token)
+
     except UserAlreadyExist as e:
         logger.info(
             "Registration rejected: User with the same cridentials "
